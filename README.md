@@ -1,2 +1,2 @@
 # RiemerPeter
-Final assignment course Design Patterns. Open University, The Netherlands.
+Final assignment course Design Patterns (IM0102). Open University, The Netherlands.

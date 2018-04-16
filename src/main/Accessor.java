@@ -1,4 +1,7 @@
+package main;
 import java.io.IOException;
+
+import model.Presentation;
 
 /**
  * <p>Een Accessor maakt het mogelijk om gegevens voor een presentatie

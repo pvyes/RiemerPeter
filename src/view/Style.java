@@ -1,3 +1,4 @@
+package view;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -55,4 +56,45 @@ public class Style {
 	public Font getFont(float scale) {
 		return font.deriveFont(fontSize * scale);
 	}
+
+	public int getIndent() {
+		return indent;
+	}
+
+	public void setIndent(int indent) {
+		this.indent = indent;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public Font getFont() {
+		return font;
+	}
+
+	public void setFont(Font font) {
+		this.font = font;
+	}
+
+	public int getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	public int getLeading() {
+		return leading;
+	}
+
+	public void setLeading(int leading) {
+		this.leading = leading;
+	}
+	
 }

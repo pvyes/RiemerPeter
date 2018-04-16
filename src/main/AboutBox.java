@@ -1,3 +1,4 @@
+package main;
 import java.awt.Frame;
 import javax.swing.JOptionPane;
 

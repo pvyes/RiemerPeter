@@ -1,4 +1,9 @@
+package main;
 import javax.swing.JOptionPane;
+
+import model.Presentation;
+import view.SlideViewerFrame;
+import view.Style;
 
 import java.io.IOException;
 

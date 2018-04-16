@@ -1,3 +1,8 @@
+package main;
+import model.BitmapItem;
+import model.Presentation;
+import model.Slide;
+
 /** Een ingebouwde demo-presentatie
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.1 2002/12/17 Gert Florijn

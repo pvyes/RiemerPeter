@@ -22,6 +22,8 @@ import java.io.IOException;
  */
 
 public class JabberPoint {
+	public static final String TESTFILE = "test.xml";
+	
 	protected static final String IOERR = "IO Error: ";
 	protected static final String JABERR = "Jabberpoint Error ";
 	protected static final String JABVERSION = "Jabberpoint 1.6 - OU version";

@@ -10,6 +10,11 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import actions.Action;
+import actions.ActionFactory;
+import actions.GoToSlide;
+import actions.OpenFile;
+import actions.OpenFileAndGoToSlide;
 import main.AboutBox;
 import main.Accessor;
 import main.XMLAccessor;
@@ -52,6 +57,7 @@ public class MenuController extends MenuBar {
 	protected static final String SAVEERR = "Save Error";
 
 	public MenuController(Frame frame, Presentation pres) {
+		ActionFactory af = ActionFactory.getInstance();
 		parent = frame;
 		presentation = pres;
 		MenuItem menuItem;
@@ -61,14 +67,22 @@ public class MenuController extends MenuBar {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.clear();
 				Accessor xmlAccessor = new XMLAccessor();
-				try {
-					xmlAccessor.loadFile(presentation, TESTFILE);
+//				try {
+/*					Action openFile = new OpenFile(xmlAccessor, presentation, TESTFILE);
+					openFile.performAction();
+*/
+				OpenFileAndGoToSlide openFileAndGoToSlide = (OpenFileAndGoToSlide) af.getAction(ActionFactory.OPEN_FILE_AND_GO_TO_SLIDE);
+				openFileAndGoToSlide.setPresentation(presentation);
+				openFileAndGoToSlide.setFilename(TESTFILE);
+				openFileAndGoToSlide.setSlidenumber(4);
+				openFileAndGoToSlide.performAction();
+/*					xmlAccessor.loadFile(presentation, TESTFILE);
 					presentation.setSlideNumber(0);
 				} catch (IOException exc) {
 					JOptionPane.showMessageDialog(parent, IOEX + exc, 
          			LOADERR, JOptionPane.ERROR_MESSAGE);
 				}
-				parent.repaint();
+*/				parent.repaint();
 			}
 		} );
 		fileMenu.add(menuItem = mkMenuItem(NEW));
@@ -116,7 +130,11 @@ public class MenuController extends MenuBar {
 			public void actionPerformed(ActionEvent actionEvent) {
 				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
 				int pageNumber = Integer.parseInt(pageNumberStr);
-				presentation.setSlideNumber(pageNumber - 1);
+//				presentation.setSlideNumber(pageNumber - 1);
+				GoToSlide goToSlide = (GoToSlide) af.getAction(ActionFactory.GO_TO_SLIDE);
+				goToSlide.setPresentation(presentation);
+				goToSlide.setPageNumber(pageNumber);
+				goToSlide.performAction();
 			}
 		});
 		add(viewMenu);

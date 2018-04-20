@@ -11,23 +11,22 @@ import model.Presentation;
  *
  */
 public class OpenFile implements Action {
-	String filename;
-	Presentation presentation;
+	private String key;
+	private String filename;
+	private Presentation presentation;
 	
 	protected OpenFile() {
+		key = ActionFactory.OPEN_FILE;
 		filename = JabberPoint.TESTFILE;
 		presentation = null;		
 	}
 
-	/* (non-Javadoc)
-	 * @see actions.Action#performAction()
-	 */
-	@Override
-	// TODO handle exception properly, also presentation == null
+// TODO handle exception properly, also presentation == null
 	public void performAction() {
 		XMLAccessor accessor = new XMLAccessor();
+		presentation.clear();
 		try {
-			 accessor.loadFile(presentation, filename);
+			accessor.loadFile(presentation, filename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,5 +60,9 @@ public class OpenFile implements Action {
 	 */
 	public void setPresentation(Presentation presentation) {
 		this.presentation = presentation;
+	}
+
+	public String getKey() {
+		return key;
 	}
 }

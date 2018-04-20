@@ -1,6 +1,18 @@
 package controller;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
+import actions.Action;
+import actions.ActionFactory;
+import actions.Beep;
+import actions.CompositeAction;
+import actions.GoToSlide;
+import actions.NextSlide;
+import actions.OpenFile;
+import actions.PreviousSlide;
+import actions.SystemExit;
+import main.JabberPoint;
 import model.Presentation;
 
 import java.awt.event.KeyAdapter;
@@ -17,6 +29,7 @@ import java.awt.event.KeyAdapter;
 
 public class KeyController extends KeyAdapter {
 	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
+	private ActionFactory af = ActionFactory.getInstance();
 
 	public KeyController(Presentation p) {
 		presentation = p;
@@ -28,19 +41,56 @@ public class KeyController extends KeyAdapter {
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_ENTER:
 			case '+':
-				presentation.nextSlide();
+				NextSlide ns = (NextSlide) af.getAction(ActionFactory.NEXT_SLIDE);
+				ns.setPresentation(presentation);
+				ns.performAction();
 				break;
 			case KeyEvent.VK_PAGE_UP:
 			case KeyEvent.VK_UP:
 			case '-':
-				presentation.prevSlide();
+				PreviousSlide ps = (PreviousSlide) af.getAction(ActionFactory.PREVIOUS_SLIDE);
+				ps.setPresentation(presentation);
+				ps.performAction();
+				break;
+			case 'b':
+			case 'B':
+			CompositeAction bogb = makeCompositeAction();
+				bogb.performAction();
 				break;
 			case 'q':
 			case 'Q':
-				System.exit(0);
+				SystemExit se = (SystemExit) af.getAction(ActionFactory.SYSTEM_EXIT);
+				se.performAction();
 				break; // wordt nooit bereikt als het goed is
 			default:
 				break;
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	private CompositeAction makeCompositeAction() {
+		CompositeAction bogb = new CompositeAction("bogb");
+		//beep, Openfile, go to page 3 and beep
+		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.BEEP)); 
+		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.OPEN_FILE));
+		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.GO_TO_SLIDE));
+		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.BEEP));
+		List<Action> result = bogb.getActionsByKey(ActionFactory.GO_TO_SLIDE);
+		for (int i = 0; i < result.size(); i ++) {
+			//parameter passed by reference
+			GoToSlide gts = (GoToSlide) result.get(i);
+			gts.setPresentation(presentation);
+			gts.setPageNumber(3);;
+		}
+		List<Action> resultOpenFile = bogb.getActionsByKey(ActionFactory.OPEN_FILE);
+		for (int i = 0; i < resultOpenFile.size(); i ++) {
+			//parameter passed by reference
+			OpenFile of = (OpenFile) resultOpenFile.get(i);
+			of.setPresentation(presentation);
+			of.setFilename(JabberPoint.TESTFILE);
+		}
+		return bogb;
 	}
 }

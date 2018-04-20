@@ -10,14 +10,17 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import actions.Action;
 import actions.ActionFactory;
 import actions.GoToSlide;
+import actions.NextSlide;
 import actions.OpenFile;
-import actions.OpenFileAndGoToSlide;
+import actions.PreviousSlide;
+import actions.SystemExit;
+
 import main.AboutBox;
 import main.Accessor;
 import main.XMLAccessor;
+
 import model.Presentation;
 
 /** <p>De controller voor het menu</p>
@@ -44,11 +47,12 @@ public class MenuController extends MenuBar {
 	protected static final String NEW = "New";
 	protected static final String NEXT = "Next";
 	protected static final String OPEN = "Open";
-	protected static final String PAGENR = "Page number?";
 	protected static final String PREV = "Prev";
 	protected static final String SAVE = "Save";
 	protected static final String VIEW = "View";
 	
+	protected static final String PAGENR = "Page number?";
+
 	protected static final String TESTFILE = "test.xml";
 	protected static final String SAVEFILE = "dump.xml";
 	
@@ -57,7 +61,6 @@ public class MenuController extends MenuBar {
 	protected static final String SAVEERR = "Save Error";
 
 	public MenuController(Frame frame, Presentation pres) {
-		ActionFactory af = ActionFactory.getInstance();
 		parent = frame;
 		presentation = pres;
 		MenuItem menuItem;
@@ -65,17 +68,10 @@ public class MenuController extends MenuBar {
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.clear();
-				Accessor xmlAccessor = new XMLAccessor();
-//				try {
-/*					Action openFile = new OpenFile(xmlAccessor, presentation, TESTFILE);
-					openFile.performAction();
-*/
-				OpenFileAndGoToSlide openFileAndGoToSlide = (OpenFileAndGoToSlide) af.getAction(ActionFactory.OPEN_FILE_AND_GO_TO_SLIDE);
-				openFileAndGoToSlide.setPresentation(presentation);
-				openFileAndGoToSlide.setFilename(TESTFILE);
-				openFileAndGoToSlide.setSlidenumber(4);
-				openFileAndGoToSlide.performAction();
+				OpenFile openFile = (OpenFile) ActionFactory.getInstance().getAction(ActionFactory.OPEN_FILE);
+				openFile.setPresentation(presentation);
+				openFile.setFilename(TESTFILE);
+				openFile.performAction();
 /*					xmlAccessor.loadFile(presentation, TESTFILE);
 					presentation.setSlideNumber(0);
 				} catch (IOException exc) {
@@ -108,7 +104,9 @@ public class MenuController extends MenuBar {
 		fileMenu.add(menuItem = mkMenuItem(EXIT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.exit(0);
+//				presentation.exit(0);
+				SystemExit se = (SystemExit) ActionFactory.getInstance().getAction(ActionFactory.SYSTEM_EXIT);
+				se.performAction();
 			}
 		});
 		add(fileMenu);
@@ -116,13 +114,19 @@ public class MenuController extends MenuBar {
 		viewMenu.add(menuItem = mkMenuItem(NEXT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.nextSlide();
+//				presentation.nextSlide();
+				NextSlide nextSlide = (NextSlide) ActionFactory.getInstance().getAction(ActionFactory.NEXT_SLIDE);
+				nextSlide.setPresentation(presentation);
+				nextSlide.performAction();
 			}
 		});
 		viewMenu.add(menuItem = mkMenuItem(PREV));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.prevSlide();
+//				presentation.prevSlide();
+				PreviousSlide prevSlide = (PreviousSlide) ActionFactory.getInstance().getAction(ActionFactory.PREVIOUS_SLIDE);
+				prevSlide.setPresentation(presentation);
+				prevSlide.performAction();
 			}
 		});
 		viewMenu.add(menuItem = mkMenuItem(GOTO));
@@ -131,7 +135,7 @@ public class MenuController extends MenuBar {
 				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
 				int pageNumber = Integer.parseInt(pageNumberStr);
 //				presentation.setSlideNumber(pageNumber - 1);
-				GoToSlide goToSlide = (GoToSlide) af.getAction(ActionFactory.GO_TO_SLIDE);
+				GoToSlide goToSlide = (GoToSlide) ActionFactory.getInstance().getAction(ActionFactory.GO_TO_SLIDE);
 				goToSlide.setPresentation(presentation);
 				goToSlide.setPageNumber(pageNumber);
 				goToSlide.performAction();
@@ -150,6 +154,9 @@ public class MenuController extends MenuBar {
 
 // een menu-item aanmaken
 	public MenuItem mkMenuItem(String name) {
-		return new MenuItem(name, new MenuShortcut(name.charAt(0)));
+		char shortcut = name.charAt(0);
+		//Avoid double shortcuts ('N' of "New" and "Next")
+		if (name.equals(NEXT)) shortcut = 'X';
+		return new MenuItem(name, new MenuShortcut(shortcut));
 	}
 }

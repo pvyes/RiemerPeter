@@ -1,7 +1,7 @@
 package actions;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author peter
@@ -9,11 +9,14 @@ import java.util.Map;
  */
 public class ActionFactory {
 	public static final String OPEN_FILE = "openfile";
+	public static final String SYSTEM_EXIT = "systemexit";
 	public static final String GO_TO_SLIDE = "gotoslide";
-	public static final String OPEN_FILE_AND_GO_TO_SLIDE = "openfileandgotoslide";
+	public static final String NEXT_SLIDE = "nextslide";
+	public static final String PREVIOUS_SLIDE = "previousslide";
+	public static final String BEEP = "beep";
 	
     private static final ActionFactory instance = new ActionFactory();
-    private Map<String, Action> actionPool;
+    private HashMap<String, Action> actionPool;
     
     //private constructor to avoid client applications to use constructor
     private ActionFactory(){
@@ -31,12 +34,24 @@ public class ActionFactory {
 	    		newAction = new OpenFile();
 	    		break;
 	    	}
+	    	case SYSTEM_EXIT:	{
+	    		newAction = new SystemExit();
+	    		break;
+	    	}
 	    	case GO_TO_SLIDE: {
 	    		newAction = new GoToSlide();
 	    		break;
 	    	}
-	    	case OPEN_FILE_AND_GO_TO_SLIDE: {
-	    		newAction = new OpenFileAndGoToSlide();
+	    	case NEXT_SLIDE: {
+	    		newAction = new NextSlide();
+	    		break;
+	    	}
+	    	case PREVIOUS_SLIDE: {
+	    		newAction = new PreviousSlide();
+	    		break;
+	    	}
+	    	case BEEP: {
+	    		newAction = new Beep();
 	    		break;
 	    	}
 	    }
@@ -54,5 +69,13 @@ public class ActionFactory {
     		return createAction(key);
     	}
     }
-
+    
+    public Action createAction(String actionKey, List<String> actions) {
+    	CompositeAction ca = new CompositeAction(actionKey);
+    	for (int i = 0; i < actions.size(); i++) {
+    		ca.addAction(getAction(actions.get(i)));
+    	}
+    	actionPool.put(actionKey, ca);
+    	return ca;    	
+    }
 }

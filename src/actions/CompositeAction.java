@@ -1,16 +1,19 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author peter
  *
  */
-public abstract class CompositeAction implements Action {
+public class CompositeAction implements Action {
 	
-	ArrayList<Action> actions;
+	private ArrayList<Action> actions;
+	protected String key;
 	
-	public CompositeAction() {
+	public CompositeAction(String key) {
+		this.key = key;
 		actions = new ArrayList<Action>();
 	}
 	
@@ -31,5 +34,20 @@ public abstract class CompositeAction implements Action {
 	/** get a single action by index */
 	public Action getAction(int index) {
 		return actions.get(index);
+	}
+
+	public List<Action> getActionsByKey(String actionKey) {
+        List<Action> result = new ArrayList<>();
+        actions.forEach(action -> {
+            if (action.getKey() == actionKey) {
+                result.add(action);
+            }
+        });
+        return result;
+	}
+	
+	/** return the key */
+	public String getKey() {
+		return key;
 	} 
 }

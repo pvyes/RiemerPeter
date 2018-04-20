@@ -8,19 +8,17 @@ import model.Presentation;
  *
  */
 public class GoToSlide implements Action {
-	Presentation presentation;
-	int pageNumber;
+	private String key;
+	private Presentation presentation;
+	private int pageNumber;
 	
 	protected GoToSlide() {
+		key = ActionFactory.GO_TO_SLIDE;
 		presentation = null;
 		pageNumber = 1;
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see actions.Action#performAction()
-	 */
-	@Override
 	public void performAction() {
 		presentation.setSlideNumber(pageNumber - 1);		
 	}
@@ -51,5 +49,9 @@ public class GoToSlide implements Action {
 	 */
 	public void setPageNumber(int pageNumber) {
 		this.pageNumber = pageNumber;
+	}
+
+	public String getKey() {		
+		return key;
 	}
 }

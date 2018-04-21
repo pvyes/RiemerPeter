@@ -70,10 +70,10 @@ public class ActionFactory {
     	}
     }
     
-    public Action createAction(String actionKey, List<String> actions) {
+    public Action createAction(String actionKey, List<Action> actions) {
     	CompositeAction ca = new CompositeAction(actionKey);
     	for (int i = 0; i < actions.size(); i++) {
-    		ca.addAction(getAction(actions.get(i)));
+    		ca.addAction(actions.get(i));
     	}
     	actionPool.put(actionKey, ca);
     	return ca;    	

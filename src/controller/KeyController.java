@@ -54,7 +54,7 @@ public class KeyController extends KeyAdapter {
 				break;
 			case 'b':
 			case 'B':
-			CompositeAction bogb = makeCompositeAction();
+			CompositeAction bogb = (CompositeAction) makeCompositeAction();
 				bogb.performAction();
 				break;
 			case 'q':
@@ -70,27 +70,15 @@ public class KeyController extends KeyAdapter {
 	/**
 	 * @return
 	 */
-	private CompositeAction makeCompositeAction() {
-		CompositeAction bogb = new CompositeAction("bogb");
+	private Action makeCompositeAction() {
 		//beep, Openfile, go to page 3 and beep
-		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.BEEP)); 
-		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.OPEN_FILE));
-		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.GO_TO_SLIDE));
-		bogb.addAction(ActionFactory.getInstance().getAction(ActionFactory.BEEP));
-		List<Action> result = bogb.getActionsByKey(ActionFactory.GO_TO_SLIDE);
-		for (int i = 0; i < result.size(); i ++) {
-			//parameter passed by reference
-			GoToSlide gts = (GoToSlide) result.get(i);
-			gts.setPresentation(presentation);
-			gts.setPageNumber(3);;
-		}
-		List<Action> resultOpenFile = bogb.getActionsByKey(ActionFactory.OPEN_FILE);
-		for (int i = 0; i < resultOpenFile.size(); i ++) {
-			//parameter passed by reference
-			OpenFile of = (OpenFile) resultOpenFile.get(i);
-			of.setPresentation(presentation);
-			of.setFilename(JabberPoint.TESTFILE);
-		}
+		List<Action> actions = new ArrayList<Action>();
+		actions.add(ActionFactory.getInstance().getAction(ActionFactory.BEEP));
+		GoToSlide gts = (GoToSlide) ActionFactory.getInstance().getAction(ActionFactory.GO_TO_SLIDE);
+		gts.setPresentation(presentation);
+		gts.setPageNumber(2);
+		actions.add(gts);
+		Action bogb = ActionFactory.getInstance().createAction("bogb", actions);
 		return bogb;
 	}
 }

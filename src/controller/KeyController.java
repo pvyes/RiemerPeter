@@ -78,7 +78,7 @@ public class KeyController extends KeyAdapter {
 		gts.setPresentation(presentation);
 		gts.setPageNumber(2);
 		actions.add(gts);
-		Action bogb = ActionFactory.getInstance().createAction("bogb", actions);
+		Action bogb = ActionFactory.getInstance().getAction("bogb", actions);
 		return bogb;
 	}
 }

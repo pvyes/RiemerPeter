@@ -35,8 +35,8 @@ public class SlideViewerComponent extends JComponent {
 	private static final String FONTNAME = "Dialog";
 	private static final int FONTSTYLE = Font.BOLD;
 	private static final int FONTHEIGHT = 10;
-	private static final int XPOS = 1100;
-	private static final int YPOS = 20;
+	private static final int XPOS = 1100; //x-position of slide number information
+	private static final int YPOS = 20;	//y-position of slide number information
 
 	public SlideViewerComponent(Presentation pres, JFrame frame) {
 		setBackground(BGCOLOR); 

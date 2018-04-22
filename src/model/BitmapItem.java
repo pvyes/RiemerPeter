@@ -7,6 +7,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import actions.ActionFactory;
 import view.Style;
 
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class BitmapItem extends SlideItem {
 		catch (IOException e) {
 			System.err.println(FILE + imageName + NOTFOUND) ;
 		}
+		setAction(ActionFactory.getInstance().getAction(ActionFactory.BEEP));
 	}
 
 // Een leeg bitmap-item

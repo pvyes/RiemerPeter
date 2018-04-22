@@ -2,6 +2,8 @@ package model;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import view.Style;
@@ -22,6 +24,7 @@ public class Slide {
 	/* Geen String meer maar een TextItem */
 	protected TextItem title; // de titel wordt apart bewaard
 	protected Vector<SlideItem> items; // de slide-items worden in een Vector bewaard
+	protected Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
 
 	public Slide() {
 		items = new Vector<SlideItem>();
@@ -59,6 +62,11 @@ public class Slide {
 		return items;
 	}
 
+	// geef alle boundingBoxes in een Vector
+	public Map<SlideItem, Rectangle> getBoundingBoxes() {
+		return boundingBoxes;
+	}
+
 	// geef de afmeting van de Slide
 	public int getSize() {
 		return items.size();
@@ -76,6 +84,10 @@ public class Slide {
 	      slideItem = (SlideItem)getSlideItems().elementAt(number);
 	      style = Style.getStyle(slideItem.getLevel());
 	      slideItem.draw(area.x, y, scale, g, style, view);
+	      Rectangle bb = slideItem.getBoundingBox(g, view, scale, style);
+	      bb.y = y + (int) area.getY();
+	      boundingBoxes.put(slideItem, bb);
+//System.out.println(slideItem.toString() + ": " + bb);
 	      y += slideItem.getBoundingBox(g, view, scale, style).height;
 	    }
 	  }

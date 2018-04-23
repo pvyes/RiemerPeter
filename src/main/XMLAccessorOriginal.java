@@ -20,7 +20,6 @@ import model.TextItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
@@ -34,15 +33,14 @@ import org.w3c.dom.NodeList;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class XMLAccessor extends Accessor {
+public class XMLAccessorOriginal extends Accessor {
 	
     /** Default API to use. */
     protected static final String DEFAULT_API_TO_USE = "dom";
     
     /** namen van xml tags of attributen */
-    protected static final String SLIDESHOW = "slideshow";
-    protected static final String HEAD = "head";
-    protected static final String TITLE = "title";
+    protected static final String SHOWTITLE = "showtitle";
+    protected static final String SLIDETITLE = "title";
     protected static final String SLIDE = "slide";
     protected static final String ITEM = "item";
     protected static final String LEVEL = "level";
@@ -68,15 +66,14 @@ public class XMLAccessor extends Accessor {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();    
 			Document document = builder.parse(new File(filename)); // maak een JDOM document
 			Element doc = document.getDocumentElement();
-			Element head =  (Element) doc.getElementsByTagName(HEAD).item(0); //there's only one head-element
-			presentation.setTitle(getTitle(head, TITLE));
+			presentation.setTitle(getTitle(doc, SHOWTITLE));
 
 			NodeList slides = doc.getElementsByTagName(SLIDE);
 			max = slides.getLength();
 			for (slideNumber = 0; slideNumber < max; slideNumber++) {
 				Element xmlSlide = (Element) slides.item(slideNumber);
 				Slide slide = new Slide();
-				slide.setTitle(getTitle(xmlSlide, TITLE));
+				slide.setTitle(getTitle(xmlSlide, SLIDETITLE));
 				presentation.append(slide);
 				
 				NodeList slideItems = xmlSlide.getElementsByTagName(ITEM);

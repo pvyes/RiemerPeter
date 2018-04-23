@@ -19,6 +19,7 @@ import actions.SystemExit;
 
 import main.AboutBox;
 import main.Accessor;
+import main.JabberPoint;
 import main.XMLAccessor;
 
 import model.Presentation;
@@ -53,7 +54,7 @@ public class MenuController extends MenuBar {
 	
 	protected static final String PAGENR = "Page number?";
 
-	protected static final String TESTFILE = "test.xml";
+	protected static final String TESTFILE = JabberPoint.TESTFILE;
 	protected static final String SAVEFILE = "dump.xml";
 	
 	protected static final String IOEX = "IO Exception: ";

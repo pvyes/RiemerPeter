@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class JabberPoint {
 	public static final String TESTFILE = "actiontest.xml";
-	public static final String TESTFILE_ORIGINAL = "test.xml";
+	public static final String SAVEFILE = "dump.xml";
 	
 	protected static final String IOERR = "IO Error: ";
 	protected static final String JABERR = "Jabberpoint Error ";

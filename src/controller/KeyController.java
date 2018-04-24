@@ -1,15 +1,8 @@
 package controller;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
-import actions.Action;
 import actions.ActionFactory;
-import actions.Beep;
-import actions.CompositeAction;
-import actions.GoToSlide;
 import actions.NextSlide;
-import actions.OpenFile;
 import actions.PreviousSlide;
 import actions.SystemExit;
 import main.JabberPoint;
@@ -51,11 +44,6 @@ public class KeyController extends KeyAdapter {
 				PreviousSlide ps = (PreviousSlide) af.getAction(ActionFactory.PREVIOUS_SLIDE);
 				ps.performAction();
 				break;
-			case 'b':
-			case 'B':
-			CompositeAction bogb = (CompositeAction) makeCompositeAction();
-				bogb.performAction();
-				break;
 			case 'q':
 			case 'Q':
 				SystemExit se = (SystemExit) af.getAction(ActionFactory.SYSTEM_EXIT);
@@ -64,20 +52,5 @@ public class KeyController extends KeyAdapter {
 			default:
 				break;
 		}
-	}
-
-	/**
-	 * @return
-	 */
-	private Action makeCompositeAction() {
-		//beep, Openfile, go to page 3 and beep
-		List<Action> actions = new ArrayList<Action>();
-		actions.add(af.getAction(ActionFactory.BEEP));
-		GoToSlide gts = (GoToSlide) af.getAction(ActionFactory.GO_TO_SLIDE);
-		gts.setPresentation(presentation);
-		gts.setPageNumber(2);
-		actions.add(gts);
-		Action bogb = af.getAction("bogb", actions);
-		return bogb;
 	}
 }

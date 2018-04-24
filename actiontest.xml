@@ -40,6 +40,9 @@
 			</action>			
 			<action name="beep">
 				<text level="2">Laat een geluid horen</text>
+				<action name="lastslide">
+					<text level="3">Beep and go (to the last slide)!</text>
+				</action>
 				<image level="2">beep.jpg</image>
 			</action>
 			<action name="systemexit">

@@ -1,17 +1,14 @@
 package controller;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputAdapter;
 
-import actions.ActionFactory;
 import model.Presentation;
 import model.Slide;
 import model.SlideItem;
@@ -33,21 +30,14 @@ public class MouseController extends MouseInputAdapter implements MouseListener 
 		//get the position of the mouseclick
 		Point2D p = e.getPoint();
 		Slide slide = presentation.getCurrentSlide();
-		for (Map.Entry<SlideItem, Rectangle> bb : slide.getBoundingBoxes().entrySet()) {
-			System.out.println(bb.getKey() + " : " + bb.getValue());			
-		}
-		System.out.println(p.toString());
 		Map<SlideItem, Rectangle> bbs = slide.getBoundingBoxes();
 		for (Map.Entry<SlideItem, Rectangle> entry : bbs.entrySet()) {
 			Rectangle r = entry.getValue();
 			SlideItem si = entry.getKey();
-			System.out.println("rect frame " + si.toString() + " = " + r.getFrame());			
 			if (r.getFrame().contains(p) && si.getAction() != null) {
-				System.out.println("action of " + si.toString() + " = " + si.getAction().getKey());
 				si.getAction().performAction();
 			}
-		}
-		
+		}		
 	}
 
 	/* (non-Javadoc)

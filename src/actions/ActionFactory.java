@@ -18,6 +18,8 @@ public class ActionFactory {
 	public static final String FIRST_SLIDE = "firstslide";
 	public static final String LAST_SLIDE = "lastslide";
 	public static final String BEEP = "beep";
+	public static final String NEW_FILE = "newfile";
+	public static final String SAVE_FILE = "savefile";
 	
 	private static Presentation presentation;
 	
@@ -68,6 +70,14 @@ public class ActionFactory {
 	    	}
 	    	case BEEP: {
 	    		newAction = new Beep();
+	    		break;
+	    	}
+	    	case NEW_FILE: {
+	    		newAction = new NewFile(presentation);
+	    		break;
+	    	}
+	    	case SAVE_FILE: {
+	    		newAction = new SaveFile(presentation);
 	    		break;
 	    	}
 	    }

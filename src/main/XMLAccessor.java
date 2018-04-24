@@ -61,33 +61,14 @@ public class XMLAccessor extends Accessor {
     protected static final String UNKNOWNTYPE = "Unknown Element type";
     protected static final String NFE = "Number Format Exception";
     
-    
-    private String getTitle(Element element, String tagName) {
-    	NodeList titles = element.getElementsByTagName(tagName);
-    	return titles.item(0).getTextContent();
-    	
-    }
-
 	public void loadFile(Presentation presentation, String filename) throws IOException {
-		int slideNumber, itemNumber, max = 0, maxItems = 0;
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();    
 			Document document = builder.parse(new File(filename)); // maak een JDOM document
 			Element doc = document.getDocumentElement();
-			Element head =  (Element) doc.getElementsByTagName(HEAD).item(0); //there's only one head-element
-			presentation.setTitle(getTitle(head, TITLE));
-
-			NodeList slides = doc.getElementsByTagName(SLIDE);
-			max = slides.getLength();
-			for (slideNumber = 0; slideNumber < max; slideNumber++) {
-				Element xmlSlide = (Element) slides.item(slideNumber);
-				Slide slide = new Slide();
-				slide.setTitle(getTitle(xmlSlide, TITLE));
-				presentation.append(slide);
-				NodeList items = xmlSlide.getElementsByTagName(ITEMS); //There is only one <items>
-				NodeList slideItems = items.item(0).getChildNodes();
-				addSlideItems(presentation, slide, slideItems, null);
-			}
+			
+			parseHeader(presentation, doc);
+			parseSlides(presentation, doc);
 		} 
 		catch (IOException iox) {
 			System.err.println(iox.toString());
@@ -102,11 +83,58 @@ public class XMLAccessor extends Accessor {
 	}
 
 	/**
-	 * Sets the slideitems, given in the NodeList items, to the slide.
+	 * Parses the header of the xml document and modifies the given presentation accordingly.
+	 * @param presentation
+	 * @param doc
+	 */
+	private void parseHeader(Presentation presentation, Element doc) {
+		Element head =  (Element) doc.getElementsByTagName(HEAD).item(0); //there's only one head-element
+    	String title = head.getTextContent();
+		presentation.setTitle(title);
+	}
+
+	/**
+	 * Parses the slides of the xml document and modifies the given presentation accordingly.
+	 * @param presentation
+	 * @param doc
+	 */
+	private void parseSlides(Presentation presentation, Element doc) {
+		int slideNumber;
+		int max;
+		NodeList slides = doc.getElementsByTagName(SLIDE);
+		max = slides.getLength();
+		for (slideNumber = 0; slideNumber < max; slideNumber++) {
+			//slidetitles
+			Element xmlSlide = (Element) slides.item(slideNumber);
+			Slide slide = new Slide();
+			parseSlideTitle(xmlSlide, slide);
+			
+			//slideItems
+			NodeList items = xmlSlide.getElementsByTagName(ITEMS); //There is only one <items>
+			NodeList slideItems = items.item(0).getChildNodes();
+			parseSlideItems(presentation, slide, slideItems, null);
+			
+			presentation.append(slide);
+		}
+	}
+
+	/**
+	 * Parses the title of the xml slide item and modifies the given slide accordingly.
+	 * @param xmlSlide
+	 * @param slide
+	 */
+	private void parseSlideTitle(Element xmlSlide, Slide slide) {
+    	NodeList titles = xmlSlide.getElementsByTagName(TITLE);
+    	String title = titles.item(0).getTextContent();
+		slide.setTitle(title);
+	}
+
+	/**
+	 * Parses the SlideItems, given in the NodeList 'items', and add them to the slide.
 	 * @param slide
 	 * @param items
 	 */
-	private void addSlideItems(Presentation presentation, Slide slide, NodeList slideItems, Action action) {
+	private void parseSlideItems(Presentation presentation, Slide slide, NodeList slideItems, Action action) {
 		SlideItem si = null;
 		int itemsLength = slideItems.getLength();
 		for (int i = 0; i < itemsLength; i++) {
@@ -129,16 +157,16 @@ public class XMLAccessor extends Accessor {
 			}
 			//action
 			if (tag.equals(ACTION)) {
-				createAction(presentation, slide, slideItems.item(i), action);
+				createAndAddAction(presentation, slide, slideItems.item(i), action);
 			}
 		}
 	}
 
-	/**
+	/** Creates an action and adds it to the nested SlideItems.
 	 * @param item
 	 * @return
 	 */
-	private Action createAction(Presentation presentation, Slide slide, Node item, Action action) {		
+	private Action createAndAddAction(Presentation presentation, Slide slide, Node item, Action action) {		
 		NamedNodeMap attributes = item.getAttributes();
 		String actionkey = attributes.getNamedItem(NAME).getTextContent();
 		ActionFactory af = ActionFactory.getInstance(presentation);
@@ -152,13 +180,14 @@ public class XMLAccessor extends Accessor {
 			action = af.getAction(action.getKey() + "_" + actionkey, actions);
 		}
 		NodeList items = item.getChildNodes();
-		addSlideItems(presentation, slide, items, action);
+		parseSlideItems(presentation, slide, items, action);
 		return action;
 	}
 
-	/**
+	/** Creates a textItem.
 	 * @param slide
 	 * @param item
+	 * @return a TextItem
 	 */
 	private TextItem createTextItem(Node item) {
 		int level = 1; // default
@@ -175,9 +204,10 @@ public class XMLAccessor extends Accessor {
 		return new TextItem(level, item.getTextContent());		
 	}
 
-	/**
+	/** Creates a BitmapItem.
 	 * @param slide
 	 * @param item
+	 * @return a BitMpItem
 	 */
 	private BitmapItem createBitmapItem(Node item) {
 		int level = 1; // default
@@ -193,52 +223,8 @@ public class XMLAccessor extends Accessor {
 		}
 		return new BitmapItem(level, item.getTextContent());		
 	}
-	/**
-	 * @param item
-	 * @return
-	 */
-/*
- * 	private Action loadAction(Element item) {
- */
-/*		Action action = null;
-		ActionFactory af = ActionFactory.getInstance();
-		List<Action> actions = new ArrayList<Action>();
-		String dummy = item.getFirstChild().getNodeName();
-		if (item.getFirstChild().getNodeName().equals(ACTION)) {
-			item = (Element) item.getFirstChild();
-			action = af.getAction(item.getAttribute(NAME));
-		}
-		return action;
-	}
-*/
 
-/*	
-	protected void loadSlideItem(Slide slide, Element item) {
-		int level = 1; // default
-		NamedNodeMap attributes = item.getAttributes();
-		String leveltext = attributes.getNamedItem(LEVEL).getTextContent();
-		if (leveltext != null) {
-			try {
-				level = Integer.parseInt(leveltext);
-			}
-			catch(NumberFormatException x) {
-				System.err.println(NFE);
-			}
-		}
-		String type = attributes.getNamedItem(KIND).getTextContent();
-		if (TEXT.equals(type)) {
-			slide.append(new TextItem(level, item.getTextContent()));
-		}
-		else {
-			if (IMAGE.equals(type)) {
-				slide.append(new BitmapItem(level, item.getTextContent()));
-			}
-			else {
-				System.err.println(UNKNOWNTYPE);
-			}
-		}
-	}
-*/
+	//TODO still in 'old' dtd-style
 	public void saveFile(Presentation presentation, String filename) throws IOException {
 		PrintWriter out = new PrintWriter(new FileWriter(filename));
 		out.println("<?xml version=\"1.0\"?>");

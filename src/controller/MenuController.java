@@ -6,21 +6,20 @@ import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
 import actions.ActionFactory;
 import actions.GoToSlide;
+import actions.NewFile;
 import actions.NextSlide;
 import actions.OpenFile;
 import actions.PreviousSlide;
+import actions.SaveFile;
 import actions.SystemExit;
 
 import main.AboutBox;
-import main.Accessor;
 import main.JabberPoint;
-import main.XMLAccessor;
 
 import model.Presentation;
 
@@ -36,7 +35,6 @@ import model.Presentation;
 public class MenuController extends MenuBar {
 	
 	private Frame parent; // het frame, alleen gebruikt als ouder voor de Dialogs
-	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
 	private ActionFactory af;
 	
 	private static final long serialVersionUID = 227L;
@@ -54,9 +52,6 @@ public class MenuController extends MenuBar {
 	protected static final String VIEW = "View";
 	
 	protected static final String PAGENR = "Page number?";
-
-	protected static final String TESTFILE = JabberPoint.TESTFILE;
-	protected static final String SAVEFILE = "dump.xml";
 	
 	protected static final String IOEX = "IO Exception: ";
 	protected static final String LOADERR = "Load Error";
@@ -64,7 +59,6 @@ public class MenuController extends MenuBar {
 
 	public MenuController(Frame frame, Presentation pres) {
 		parent = frame;
-		presentation = pres;
 		af = ActionFactory.getInstance(pres);
 		MenuItem menuItem;
 		Menu fileMenu = new Menu(FILE);
@@ -72,8 +66,7 @@ public class MenuController extends MenuBar {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				OpenFile openFile = (OpenFile) af.getAction(ActionFactory.OPEN_FILE);
-				openFile.setPresentation(presentation);
-				openFile.setFilename(TESTFILE);
+				openFile.setFilename(JabberPoint.TESTFILE);
 				openFile.performAction();
 /*					xmlAccessor.loadFile(presentation, TESTFILE);
 					presentation.setSlideNumber(0);
@@ -81,33 +74,36 @@ public class MenuController extends MenuBar {
 					JOptionPane.showMessageDialog(parent, IOEX + exc, 
          			LOADERR, JOptionPane.ERROR_MESSAGE);
 				}
-*/				parent.repaint();
+*///				parent.repaint();
 			}
 		} );
 		fileMenu.add(menuItem = mkMenuItem(NEW));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.clear();
-				parent.repaint();
+				NewFile newFile = (NewFile) af.getAction(ActionFactory.NEW_FILE);
+				newFile.performAction();
+//				parent.repaint();
 			}
 		});
 		fileMenu.add(menuItem = mkMenuItem(SAVE));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Accessor xmlAccessor = new XMLAccessor();
+				SaveFile saveFile = (SaveFile) af.getAction(ActionFactory.SAVE_FILE);
+				saveFile.setFilename(JabberPoint.SAVEFILE);
+				saveFile.performAction();
+/*				Accessor xmlAccessor = new XMLAccessor();
 				try {
 					xmlAccessor.saveFile(presentation, SAVEFILE);
 				} catch (IOException exc) {
 					JOptionPane.showMessageDialog(parent, IOEX + exc, 
 							SAVEERR, JOptionPane.ERROR_MESSAGE);
 				}
-			}
+*/			}
 		});
 		fileMenu.addSeparator();
 		fileMenu.add(menuItem = mkMenuItem(EXIT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-//				presentation.exit(0);
 				SystemExit se = (SystemExit) af.getAction(ActionFactory.SYSTEM_EXIT);
 				se.performAction();
 			}
@@ -117,18 +113,14 @@ public class MenuController extends MenuBar {
 		viewMenu.add(menuItem = mkMenuItem(NEXT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-//				presentation.nextSlide();
 				NextSlide nextSlide = (NextSlide) af.getAction(ActionFactory.NEXT_SLIDE);
-				nextSlide.setPresentation(presentation);
 				nextSlide.performAction();
 			}
 		});
 		viewMenu.add(menuItem = mkMenuItem(PREV));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-//				presentation.prevSlide();
 				PreviousSlide prevSlide = (PreviousSlide) af.getAction(ActionFactory.PREVIOUS_SLIDE);
-				prevSlide.setPresentation(presentation);
 				prevSlide.performAction();
 			}
 		});
@@ -137,9 +129,7 @@ public class MenuController extends MenuBar {
 			public void actionPerformed(ActionEvent actionEvent) {
 				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
 				int pageNumber = Integer.parseInt(pageNumberStr);
-//				presentation.setSlideNumber(pageNumber - 1);
 				GoToSlide goToSlide = (GoToSlide)af.getAction(ActionFactory.GO_TO_SLIDE);
-				goToSlide.setPresentation(presentation);
 				goToSlide.setPageNumber(pageNumber);
 				goToSlide.performAction();
 			}

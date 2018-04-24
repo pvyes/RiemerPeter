@@ -36,6 +36,11 @@ public class CompositeAction implements Action {
 		return actions.get(index);
 	}
 
+	/** get a single action by index */
+	public List<Action> getActions() {
+		return actions;
+	}
+
 	public List<Action> getActionsByKey(String actionKey) {
         List<Action> result = new ArrayList<>();
         actions.forEach(action -> {

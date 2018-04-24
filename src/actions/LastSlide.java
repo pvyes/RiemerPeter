@@ -12,7 +12,7 @@ public class LastSlide implements Action {
 	private Presentation presentation;
 	
 	protected LastSlide(Presentation presentation) {
-		key = ActionFactory.GO_TO_SLIDE;
+		key = ActionFactory.LAST_SLIDE;
 		this.presentation = presentation;
 	}
 	

@@ -12,7 +12,7 @@ public class FirstSlide implements Action {
 	private Presentation presentation;
 	
 	protected FirstSlide(Presentation presentation) {
-		key = ActionFactory.GO_TO_SLIDE;
+		key = ActionFactory.FIRST_SLIDE;
 		this.presentation = presentation;
 	}
 	

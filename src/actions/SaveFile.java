@@ -23,14 +23,11 @@ public class SaveFile implements Action {
 
 	public void performAction() {
 		XMLAccessor accessor = new XMLAccessor();
-		presentation.clear();
 		try {
 			accessor.saveFile(presentation, JabberPoint.SAVEFILE);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		presentation.setSlideNumber(0);
 	}
 
 	/**

@@ -23,13 +23,12 @@ public class ActionFactory {
 	
 	private static Presentation presentation;
 	
-    private static final ActionFactory instance = new ActionFactory(presentation);
+    private static final ActionFactory instance = new ActionFactory();
     private HashMap<String, Action> actionPool;
     
     //private constructor to avoid client applications to use constructor
-    private ActionFactory(Presentation p){
+    private ActionFactory(){
     	actionPool = new HashMap<String, Action>();
-    	presentation = p;
     }
 
     public static ActionFactory getInstance(Presentation p){

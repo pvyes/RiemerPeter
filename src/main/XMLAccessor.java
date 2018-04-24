@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 
 import actions.Action;
 import actions.ActionFactory;
+import actions.CompositeAction;
 import model.BitmapItem;
 import model.Presentation;
 import model.Slide;
@@ -224,41 +225,74 @@ public class XMLAccessor extends Accessor {
 		return new BitmapItem(level, item.getTextContent());		
 	}
 
-	//TODO still in 'old' dtd-style
 	public void saveFile(Presentation presentation, String filename) throws IOException {
 		PrintWriter out = new PrintWriter(new FileWriter(filename));
 		out.println("<?xml version=\"1.0\"?>");
 		out.println("<!DOCTYPE presentation SYSTEM \"jabberpoint.dtd\">");
 		out.println("<presentation>");
-		out.print("<showtitle>");
-		out.print(presentation.getTitle());
-		out.println("</showtitle>");
+		out.println("<slideshow>");
+		out.println("<head>");
+		out.println("<title>");
+		out.println(presentation.getTitle());
+		out.println("</title>");
+		out.println("</head>");
 		for (int slideNumber=0; slideNumber<presentation.getSize(); slideNumber++) {
 			Slide slide = presentation.getSlide(slideNumber);
 			out.println("<slide>");
 			out.println("<title>" + slide.getTitle() + "</title>");
 			Vector<SlideItem> slideItems = slide.getSlideItems();
+			out.println("<items>");
 			for (int itemNumber = 0; itemNumber<slideItems.size(); itemNumber++) {
+				int numberOfActions = 0;
 				SlideItem slideItem = (SlideItem) slideItems.elementAt(itemNumber);
-				out.print("<item kind="); 
+				if (slideItem.getAction() != null) {
+					numberOfActions = printActionBeginTags(out, slideItem.getAction());
+				}
 				if (slideItem instanceof TextItem) {
-					out.print("\"text\" level=\"" + slideItem.getLevel() + "\">");
+					out.println("<text level=\"" + slideItem.getLevel() + "\">");
 					out.print( ( (TextItem) slideItem).getText());
+					out.print("</text>");
+					out.println();
 				}
 				else {
 					if (slideItem instanceof BitmapItem) {
-						out.print("\"image\" level=\"" + slideItem.getLevel() + "\">");
+						out.println("<image level=\"" + slideItem.getLevel() + "\">");
 						out.print( ( (BitmapItem) slideItem).getName());
+						out.print("</image>");
+						out.println();
 					}
 					else {
 						System.out.println("Ignoring " + slideItem);
 					}
 				}
-				out.println("</item>");
+				for (; numberOfActions > 0; numberOfActions--) {
+					out.print("</action>");
+				}
 			}
+			out.println("</items>");
 			out.println("</slide>");
 		}
+		out.println("</slideshow>");
 		out.println("</presentation>");
 		out.close();
+	}
+
+	/**
+	 * @param out
+	 * @param action2
+	 */
+	private int printActionBeginTags(PrintWriter out, Action action) {
+		int nr = 0;
+		if (action instanceof CompositeAction) {
+			CompositeAction ca = (CompositeAction) action;
+			for(Action a : ca.getActions()) {
+				out.println("<action name=\"" + a.getKey() + "\">");
+				nr++;
+			}
+		} else {
+			out.println("<action name=\"" + action.getKey() + "\">");	
+			nr++;
+		}
+		return nr;
 	}
 }

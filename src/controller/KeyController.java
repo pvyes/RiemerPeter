@@ -1,6 +1,11 @@
 package controller;
 import java.awt.event.KeyEvent;
 
+import actions.ActionFactory;
+import actions.NextSlide;
+import actions.PreviousSlide;
+import actions.SystemExit;
+import main.JabberPoint;
 import model.Presentation;
 
 import java.awt.event.KeyAdapter;
@@ -17,9 +22,11 @@ import java.awt.event.KeyAdapter;
 
 public class KeyController extends KeyAdapter {
 	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
+	private ActionFactory af;
 
 	public KeyController(Presentation p) {
 		presentation = p;
+		af = ActionFactory.getInstance(presentation);
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {
@@ -28,16 +35,19 @@ public class KeyController extends KeyAdapter {
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_ENTER:
 			case '+':
-				presentation.nextSlide();
+				NextSlide ns = (NextSlide) af.getAction(ActionFactory.NEXT_SLIDE);
+				ns.performAction();
 				break;
 			case KeyEvent.VK_PAGE_UP:
 			case KeyEvent.VK_UP:
 			case '-':
-				presentation.prevSlide();
+				PreviousSlide ps = (PreviousSlide) af.getAction(ActionFactory.PREVIOUS_SLIDE);
+				ps.performAction();
 				break;
 			case 'q':
 			case 'Q':
-				System.exit(0);
+				SystemExit se = (SystemExit) af.getAction(ActionFactory.SYSTEM_EXIT);
+				se.performAction();
 				break; // wordt nooit bereikt als het goed is
 			default:
 				break;

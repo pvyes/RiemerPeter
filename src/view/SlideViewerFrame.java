@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import controller.KeyController;
 import controller.MenuController;
+import controller.MouseController;
 import model.Presentation;
 
 /**
@@ -45,6 +46,7 @@ public class SlideViewerFrame extends JFrame {
 		getContentPane().add(slideViewerComponent);
 		addKeyListener(new KeyController(presentation)); // een controller toevoegen
 		setMenuBar(new MenuController(this, presentation));	// nog een controller toevoegen
+		addMouseListener(new MouseController(this, presentation));
 		setSize(new Dimension(WIDTH, HEIGHT)); // Dezelfde maten als Slide hanteert.
 		setVisible(true);
 	}

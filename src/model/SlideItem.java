@@ -3,6 +3,7 @@ import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
 
+import actions.Action;
 import view.Style;
 
 /** <p>De abstracte klasse voor een item op een Slide<p>
@@ -18,6 +19,22 @@ import view.Style;
 
 public abstract class SlideItem {
 	private int level = 0; // het level van het slideitem
+	private Rectangle boundingBox = null;
+	private Action action = null; //the action attached to this slideItem
+
+	/**
+	 * @return the action
+	 */
+	public Action getAction() {
+		return action;
+	}
+
+	/**
+	 * @param action the action to set
+	 */
+	public void setAction(Action action) {
+		this.action = action;
+	}
 
 	public SlideItem(int lev) {
 		level = lev;

@@ -208,7 +208,7 @@ public class XMLAccessor extends Accessor {
 	/** Creates a BitmapItem.
 	 * @param slide
 	 * @param item
-	 * @return a BitMpItem
+	 * @return a BitMapItem
 	 */
 	private BitmapItem createBitmapItem(Node item) {
 		int level = 1; // default

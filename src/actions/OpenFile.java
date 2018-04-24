@@ -15,13 +15,12 @@ public class OpenFile implements Action {
 	private String filename;
 	private Presentation presentation;
 	
-	protected OpenFile() {
+	protected OpenFile(Presentation presentation) {
 		key = ActionFactory.OPEN_FILE;
 		filename = JabberPoint.TESTFILE;
-		presentation = null;		
+		this.presentation = presentation;		
 	}
 
-// TODO handle exception properly, also presentation == null
 	public void performAction() {
 		XMLAccessor accessor = new XMLAccessor();
 		presentation.clear();

@@ -10,9 +10,9 @@ public class NextSlide implements Action {
 	private String key;
 	private Presentation presentation;
 	
-	protected NextSlide() {
+	protected NextSlide(Presentation presentation) {
 		key = ActionFactory.NEXT_SLIDE;
-		presentation = null;
+		this.presentation = presentation;
 	}
 
 	/**

@@ -12,13 +12,12 @@ public class GoToSlide implements Action {
 	private Presentation presentation;
 	private int pageNumber;
 	
-	protected GoToSlide() {
+	protected GoToSlide(Presentation presentation) {
 		key = ActionFactory.GO_TO_SLIDE;
-		presentation = null;
+		this.presentation = presentation;
 		pageNumber = 1;
-		
 	}
-
+	
 	public void performAction() {
 		presentation.setSlideNumber(pageNumber - 1);		
 	}

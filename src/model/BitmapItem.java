@@ -41,7 +41,6 @@ public class BitmapItem extends SlideItem {
 		catch (IOException e) {
 			System.err.println(FILE + imageName + NOTFOUND) ;
 		}
-		setAction(ActionFactory.getInstance().getAction(ActionFactory.BEEP));
 	}
 
 // Een leeg bitmap-item

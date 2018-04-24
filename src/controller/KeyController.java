@@ -29,10 +29,11 @@ import java.awt.event.KeyAdapter;
 
 public class KeyController extends KeyAdapter {
 	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
-	private ActionFactory af = ActionFactory.getInstance();
+	private ActionFactory af;
 
 	public KeyController(Presentation p) {
 		presentation = p;
+		af = ActionFactory.getInstance(presentation);
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {
@@ -42,14 +43,12 @@ public class KeyController extends KeyAdapter {
 			case KeyEvent.VK_ENTER:
 			case '+':
 				NextSlide ns = (NextSlide) af.getAction(ActionFactory.NEXT_SLIDE);
-				ns.setPresentation(presentation);
 				ns.performAction();
 				break;
 			case KeyEvent.VK_PAGE_UP:
 			case KeyEvent.VK_UP:
 			case '-':
 				PreviousSlide ps = (PreviousSlide) af.getAction(ActionFactory.PREVIOUS_SLIDE);
-				ps.setPresentation(presentation);
 				ps.performAction();
 				break;
 			case 'b':
@@ -73,12 +72,12 @@ public class KeyController extends KeyAdapter {
 	private Action makeCompositeAction() {
 		//beep, Openfile, go to page 3 and beep
 		List<Action> actions = new ArrayList<Action>();
-		actions.add(ActionFactory.getInstance().getAction(ActionFactory.BEEP));
-		GoToSlide gts = (GoToSlide) ActionFactory.getInstance().getAction(ActionFactory.GO_TO_SLIDE);
+		actions.add(af.getAction(ActionFactory.BEEP));
+		GoToSlide gts = (GoToSlide) af.getAction(ActionFactory.GO_TO_SLIDE);
 		gts.setPresentation(presentation);
 		gts.setPageNumber(2);
 		actions.add(gts);
-		Action bogb = ActionFactory.getInstance().getAction("bogb", actions);
+		Action bogb = af.getAction("bogb", actions);
 		return bogb;
 	}
 }

@@ -37,6 +37,7 @@ public class MenuController extends MenuBar {
 	
 	private Frame parent; // het frame, alleen gebruikt als ouder voor de Dialogs
 	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
+	private ActionFactory af;
 	
 	private static final long serialVersionUID = 227L;
 	
@@ -64,12 +65,13 @@ public class MenuController extends MenuBar {
 	public MenuController(Frame frame, Presentation pres) {
 		parent = frame;
 		presentation = pres;
+		af = ActionFactory.getInstance(pres);
 		MenuItem menuItem;
 		Menu fileMenu = new Menu(FILE);
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				OpenFile openFile = (OpenFile) ActionFactory.getInstance().getAction(ActionFactory.OPEN_FILE);
+				OpenFile openFile = (OpenFile) af.getAction(ActionFactory.OPEN_FILE);
 				openFile.setPresentation(presentation);
 				openFile.setFilename(TESTFILE);
 				openFile.performAction();
@@ -106,7 +108,7 @@ public class MenuController extends MenuBar {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 //				presentation.exit(0);
-				SystemExit se = (SystemExit) ActionFactory.getInstance().getAction(ActionFactory.SYSTEM_EXIT);
+				SystemExit se = (SystemExit) af.getAction(ActionFactory.SYSTEM_EXIT);
 				se.performAction();
 			}
 		});
@@ -116,7 +118,7 @@ public class MenuController extends MenuBar {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 //				presentation.nextSlide();
-				NextSlide nextSlide = (NextSlide) ActionFactory.getInstance().getAction(ActionFactory.NEXT_SLIDE);
+				NextSlide nextSlide = (NextSlide) af.getAction(ActionFactory.NEXT_SLIDE);
 				nextSlide.setPresentation(presentation);
 				nextSlide.performAction();
 			}
@@ -125,7 +127,7 @@ public class MenuController extends MenuBar {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 //				presentation.prevSlide();
-				PreviousSlide prevSlide = (PreviousSlide) ActionFactory.getInstance().getAction(ActionFactory.PREVIOUS_SLIDE);
+				PreviousSlide prevSlide = (PreviousSlide) af.getAction(ActionFactory.PREVIOUS_SLIDE);
 				prevSlide.setPresentation(presentation);
 				prevSlide.performAction();
 			}
@@ -136,7 +138,7 @@ public class MenuController extends MenuBar {
 				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
 				int pageNumber = Integer.parseInt(pageNumberStr);
 //				presentation.setSlideNumber(pageNumber - 1);
-				GoToSlide goToSlide = (GoToSlide) ActionFactory.getInstance().getAction(ActionFactory.GO_TO_SLIDE);
+				GoToSlide goToSlide = (GoToSlide)af.getAction(ActionFactory.GO_TO_SLIDE);
 				goToSlide.setPresentation(presentation);
 				goToSlide.setPageNumber(pageNumber);
 				goToSlide.performAction();

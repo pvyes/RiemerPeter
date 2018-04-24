@@ -12,4 +12,4 @@ $Id$
 <!ELEMENT action (text|image|action)+>
 <!ATTLIST text level CDATA #REQUIRED>
 <!ATTLIST image level CDATA #REQUIRED>
-<!ATTLIST action name (openfile|systemexit|gotoslide|nextslide|previousslide|beep) #REQUIRED>
+<!ATTLIST action name (openfile|systemexit|gotoslide|nextslide|previousslide|beep|lastslide|firstslide) #REQUIRED>

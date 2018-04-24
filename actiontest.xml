@@ -14,11 +14,14 @@
 			<text level="2">Gert Florijn, Mark van Elswijk, Marc Evers</text>
 			<text level="2">en Sylvia Stuurman</text>
 			<text level="1">Navigatie:</text>
-			<text level="2">Volgende slide: PgDn or Enter</text>
-			<text level="2">Vorige slide: PgUp or up-arrow</text>
-			<action name="beep">
+			<action name="nextslide">
+				<text level="2">Volgende slide: PgDn or Enter</text>
+			</action>
+			<action name="previousslide">
+				<text level="2">Vorige slide: PgUp or up-arrow</text>
+			</action>
+			<action name="systemexit">
 				<text level="2">Stoppen: q or Q</text>
-				<image level="2">JabberPoint.jpg</image>
 			</action>
 		</items>
 	</slide>

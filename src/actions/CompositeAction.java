@@ -12,7 +12,7 @@ public class CompositeAction implements Action {
 	private ArrayList<Action> actions;
 	protected String key;
 	
-	public CompositeAction(String key) {
+	protected CompositeAction(String key) {
 		this.key = key;
 		actions = new ArrayList<Action>();
 	}

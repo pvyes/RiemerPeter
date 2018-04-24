@@ -3,6 +3,8 @@ package actions;
 import java.util.HashMap;
 import java.util.List;
 
+import model.Presentation;
+
 /**
  * @author peter
  *
@@ -13,17 +15,23 @@ public class ActionFactory {
 	public static final String GO_TO_SLIDE = "gotoslide";
 	public static final String NEXT_SLIDE = "nextslide";
 	public static final String PREVIOUS_SLIDE = "previousslide";
+	public static final String FIRST_SLIDE = "firstslide";
+	public static final String LAST_SLIDE = "lastslide";
 	public static final String BEEP = "beep";
 	
-    private static final ActionFactory instance = new ActionFactory();
+	private static Presentation presentation;
+	
+    private static final ActionFactory instance = new ActionFactory(presentation);
     private HashMap<String, Action> actionPool;
     
     //private constructor to avoid client applications to use constructor
-    private ActionFactory(){
+    private ActionFactory(Presentation p){
     	actionPool = new HashMap<String, Action>();
+    	presentation = p;
     }
 
-    public static ActionFactory getInstance(){
+    public static ActionFactory getInstance(Presentation p){
+    	presentation = p;
         return instance;
     }
     
@@ -31,7 +39,7 @@ public class ActionFactory {
     	Action newAction = null;
     	switch (key) {
 	    	case OPEN_FILE:	{
-	    		newAction = new OpenFile();
+	    		newAction = new OpenFile(presentation);
 	    		break;
 	    	}
 	    	case SYSTEM_EXIT:	{
@@ -39,15 +47,23 @@ public class ActionFactory {
 	    		break;
 	    	}
 	    	case GO_TO_SLIDE: {
-	    		newAction = new GoToSlide();
+	    		newAction = new GoToSlide(presentation);
 	    		break;
 	    	}
 	    	case NEXT_SLIDE: {
-	    		newAction = new NextSlide();
+	    		newAction = new NextSlide(presentation);
 	    		break;
 	    	}
 	    	case PREVIOUS_SLIDE: {
-	    		newAction = new PreviousSlide();
+	    		newAction = new PreviousSlide(presentation);
+	    		break;
+	    	}
+	    	case FIRST_SLIDE: {
+	    		newAction = new FirstSlide(presentation);
+	    		break;
+	    	}
+	    	case LAST_SLIDE: {
+	    		newAction = new LastSlide(presentation);
 	    		break;
 	    	}
 	    	case BEEP: {
@@ -78,6 +94,7 @@ public class ActionFactory {
     		return createAction(key, actions);
     	}
     }
+    
     private Action createAction(String actionKey, List<Action> actions) {
     	CompositeAction ca = new CompositeAction(actionKey);
     	for (int i = 0; i < actions.size(); i++) {

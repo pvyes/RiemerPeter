@@ -1,5 +1,7 @@
 package main;
+import java.util.ArrayList;
 import java.util.Vector;
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +13,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import actions.Action;
+import actions.ActionFactory;
 import model.BitmapItem;
 import model.Presentation;
 import model.Slide;
@@ -44,11 +48,13 @@ public class XMLAccessor extends Accessor {
     protected static final String HEAD = "head";
     protected static final String TITLE = "title";
     protected static final String SLIDE = "slide";
-    protected static final String ITEM = "item";
-    protected static final String LEVEL = "level";
-    protected static final String KIND = "kind";
+    protected static final String ITEMS = "items";
     protected static final String TEXT = "text";
     protected static final String IMAGE = "image";
+    protected static final String ACTION = "action";
+    protected static final String NAME = "name";
+    protected static final String LEVEL = "level";
+    protected static final String KIND = "kind";
     
     /** tekst van messages */
     protected static final String PCE = "Parser Configuration Exception";
@@ -78,13 +84,9 @@ public class XMLAccessor extends Accessor {
 				Slide slide = new Slide();
 				slide.setTitle(getTitle(xmlSlide, TITLE));
 				presentation.append(slide);
-				
-				NodeList slideItems = xmlSlide.getElementsByTagName(ITEM);
-				maxItems = slideItems.getLength();
-				for (itemNumber = 0; itemNumber < maxItems; itemNumber++) {
-					Element item = (Element) slideItems.item(itemNumber);
-					loadSlideItem(slide, item);
-				}
+				NodeList items = xmlSlide.getElementsByTagName(ITEMS); //There is only one <items>
+				NodeList slideItems = items.item(0).getChildNodes();
+				addSlideItems(presentation, slide, slideItems, null);
 			}
 		} 
 		catch (IOException iox) {
@@ -99,6 +101,118 @@ public class XMLAccessor extends Accessor {
 		
 	}
 
+	/**
+	 * Sets the slideitems, given in the NodeList items, to the slide.
+	 * @param slide
+	 * @param items
+	 */
+	private void addSlideItems(Presentation presentation, Slide slide, NodeList slideItems, Action action) {
+		SlideItem si = null;
+		int itemsLength = slideItems.getLength();
+		for (int i = 0; i < itemsLength; i++) {
+			String tag = slideItems.item(i).getNodeName();
+			//text
+			if (tag.equals(TEXT)) {
+				si = createTextItem(slideItems.item(i));
+				if (action != null) {
+					si.setAction(action);
+				}
+				slide.append(si);
+			}
+			//image
+			if (tag.equals(IMAGE)) {
+				si = createBitmapItem(slideItems.item(i));
+				if (action != null) {
+					si.setAction(action);
+				}
+				slide.append(si);
+			}
+			//action
+			if (tag.equals(ACTION)) {
+				createAction(presentation, slide, slideItems.item(i), action);
+			}
+		}
+	}
+
+	/**
+	 * @param item
+	 * @return
+	 */
+	private Action createAction(Presentation presentation, Slide slide, Node item, Action action) {		
+		NamedNodeMap attributes = item.getAttributes();
+		String actionkey = attributes.getNamedItem(NAME).getTextContent();
+		ActionFactory af = ActionFactory.getInstance(presentation);
+		if (action == null) {
+			action = af.getAction(actionkey);
+		} else {
+			List<Action> actions = new ArrayList<Action>();
+			Action newAction = af.getAction(actionkey);
+			actions.add(action);
+			actions.add(newAction);
+			action = af.getAction(action.getKey() + "_" + actionkey, actions);
+		}
+		NodeList items = item.getChildNodes();
+		addSlideItems(presentation, slide, items, action);
+		return action;
+	}
+
+	/**
+	 * @param slide
+	 * @param item
+	 */
+	private TextItem createTextItem(Node item) {
+		int level = 1; // default
+		NamedNodeMap attributes = item.getAttributes();
+		String leveltext = attributes.getNamedItem(LEVEL).getTextContent();
+		if (leveltext != null) {
+			try {
+				level = Integer.parseInt(leveltext);
+			}
+			catch(NumberFormatException x) {
+				System.err.println(NFE);
+			}
+		}
+		return new TextItem(level, item.getTextContent());		
+	}
+
+	/**
+	 * @param slide
+	 * @param item
+	 */
+	private BitmapItem createBitmapItem(Node item) {
+		int level = 1; // default
+		NamedNodeMap attributes = item.getAttributes();
+		String leveltext = attributes.getNamedItem(LEVEL).getTextContent();
+		if (leveltext != null) {
+			try {
+				level = Integer.parseInt(leveltext);
+			}
+			catch(NumberFormatException x) {
+				System.err.println(NFE);
+			}
+		}
+		return new BitmapItem(level, item.getTextContent());		
+	}
+	/**
+	 * @param item
+	 * @return
+	 */
+/*
+ * 	private Action loadAction(Element item) {
+ */
+/*		Action action = null;
+		ActionFactory af = ActionFactory.getInstance();
+		List<Action> actions = new ArrayList<Action>();
+		String dummy = item.getFirstChild().getNodeName();
+		if (item.getFirstChild().getNodeName().equals(ACTION)) {
+			item = (Element) item.getFirstChild();
+			action = af.getAction(item.getAttribute(NAME));
+		}
+		return action;
+	}
+*/
+
+/*	
 	protected void loadSlideItem(Slide slide, Element item) {
 		int level = 1; // default
 		NamedNodeMap attributes = item.getAttributes();
@@ -124,7 +238,7 @@ public class XMLAccessor extends Accessor {
 			}
 		}
 	}
-
+*/
 	public void saveFile(Presentation presentation, String filename) throws IOException {
 		PrintWriter out = new PrintWriter(new FileWriter(filename));
 		out.println("<?xml version=\"1.0\"?>");

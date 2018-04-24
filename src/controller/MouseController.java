@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controller;
 
 import java.awt.Point;
@@ -32,36 +29,22 @@ public class MouseController extends MouseInputAdapter implements MouseListener 
 		presentation = p;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-	 */
-	@Override
 	public void mouseClicked(MouseEvent e) {
 		//get the position of the mouseclick
 		Point2D p = e.getPoint();
-		System.out.println(p.toString());
-/*		//look if positions belongs to a bounding box
 		Slide slide = presentation.getCurrentSlide();
-		for (SlideItem si : slide.getSlideItems()) {
-//			System.out.println(si.toString() + ": " + si.getBoundingBox().toString());
-			if (si.getBoundingBox().contains(p)) {
-//				System.out.println(si.toString());			
-				ActionFactory.getInstance().getAction(ActionFactory.BEEP).performAction();
-				System.out.println("Mouse clicked in bounding box " + si.toString() + ": " + si.getBoundingBox());
-			}
+		for (Map.Entry<SlideItem, Rectangle> bb : slide.getBoundingBoxes().entrySet()) {
+			System.out.println(bb.getKey() + " : " + bb.getValue());			
 		}
-		//fire the action of this bounding box
-		System.out.println("MouseClicked!");
-*/		
-		Slide slide = presentation.getCurrentSlide();
+		System.out.println(p.toString());
 		Map<SlideItem, Rectangle> bbs = slide.getBoundingBoxes();
 		for (Map.Entry<SlideItem, Rectangle> entry : bbs.entrySet()) {
 			Rectangle r = entry.getValue();
 			SlideItem si = entry.getKey();
-			System.out.println("rect frame = " + r.getFrame());			
+			System.out.println("rect frame " + si.toString() + " = " + r.getFrame());			
 			if (r.getFrame().contains(p) && si.getAction() != null) {
-				si.getAction().performAction();
 				System.out.println("action of " + si.toString() + " = " + si.getAction().getKey());
+				si.getAction().performAction();
 			}
 		}
 		

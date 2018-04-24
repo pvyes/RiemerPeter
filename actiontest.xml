@@ -15,20 +15,37 @@
 			<text level="2">en Sylvia Stuurman</text>
 			<text level="1">Navigatie:</text>
 			<action name="nextslide">
-				<text level="2">Volgende slide: PgDn or Enter</text>
-			</action>
-			<action name="previousslide">
-				<text level="2">Vorige slide: PgUp or up-arrow</text>
-			</action>
-			<action name="systemexit">
-				<text level="2">Stoppen: q or Q</text>
+				<text level="2">Check navigation buttons on next slide...</text>
 			</action>
 		</items>
 	</slide>
 	<slide>
-		<title>Een bijna lege slide</title>
+		<title>Navigation buttons</title>
 		<items>
-			<text level="1"> </text>
+			<action name="previousslide">
+				<text level="2">Vorige slide</text>
+				<image level="2">previous.jpg</image>
+			</action>
+			<action name="nextslide">
+				<text level="2">volgende slide</text>
+				<image level="2">next.jpg</image>
+			</action>
+			<action name="firstslide">
+				<text level="2">Eerste slide</text>
+				<image level="2">first.jpg</image>
+			</action>
+			<action name="lastslide">
+				<text level="2">Laatste slide</text>
+				<image level="2">last.jpg</image>
+			</action>			
+			<action name="beep">
+				<text level="2">Laat een geluid horen</text>
+				<image level="2">beep.jpg</image>
+			</action>
+			<action name="systemexit">
+				<text level="2">Stoppen</text>
+				<image level="2">exit.jpg</image>
+			</action>
 		</items>
 	</slide>
 	<slide>
@@ -65,6 +82,9 @@
 		<text level="1">Dit is het einde van de presentatie.</text>
 		<image level="1">JabberPoint.jpg</image>
 		<text level="1">Tot ziens.</text>
+		<action name="firstslide">
+			<text level="2">First slide</text>
+		</action>
 		</items>
 	</slide>
 </slideshow>

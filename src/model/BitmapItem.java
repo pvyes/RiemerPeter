@@ -7,7 +7,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import actions.ActionFactory;
+import action.ActionFactory;
 import view.Style;
 
 import java.io.IOException;

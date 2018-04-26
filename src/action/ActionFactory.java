@@ -1,8 +1,9 @@
-package actions;
+package action;
 
 import java.util.HashMap;
 import java.util.List;
 
+import main.JabberPointException;
 import model.Presentation;
 
 /**
@@ -10,6 +11,9 @@ import model.Presentation;
  *
  */
 public class ActionFactory {
+	public static final String ACTION_ERROR = "Action error";
+	public static final String ACTION_ERROR_MESSAGE = "De gevraagde actie is niet gekend.";
+	
 	public static final String OPEN_FILE = "openfile";
 	public static final String SYSTEM_EXIT = "systemexit";
 	public static final String GO_TO_SLIDE = "gotoslide";
@@ -20,6 +24,7 @@ public class ActionFactory {
 	public static final String BEEP = "beep";
 	public static final String NEW_FILE = "newfile";
 	public static final String SAVE_FILE = "savefile";
+	public static final String ABOUT = "about";
 	
 	private static Presentation presentation;
 	
@@ -39,46 +44,41 @@ public class ActionFactory {
     private Action createAction(String key) {
     	Action newAction = null;
     	switch (key) {
-	    	case OPEN_FILE:	{
+	    	case OPEN_FILE:
 	    		newAction = new OpenFile(presentation);
 	    		break;
-	    	}
-	    	case SYSTEM_EXIT:	{
+	    	case SYSTEM_EXIT:
 	    		newAction = new SystemExit();
 	    		break;
-	    	}
-	    	case GO_TO_SLIDE: {
+	    	case GO_TO_SLIDE:
 	    		newAction = new GoToSlide(presentation);
 	    		break;
-	    	}
-	    	case NEXT_SLIDE: {
+	    	case NEXT_SLIDE:
 	    		newAction = new NextSlide(presentation);
 	    		break;
-	    	}
-	    	case PREVIOUS_SLIDE: {
+	    	case PREVIOUS_SLIDE:
 	    		newAction = new PreviousSlide(presentation);
 	    		break;
-	    	}
-	    	case FIRST_SLIDE: {
+	    	case FIRST_SLIDE:
 	    		newAction = new FirstSlide(presentation);
 	    		break;
-	    	}
-	    	case LAST_SLIDE: {
+	    	case LAST_SLIDE:
 	    		newAction = new LastSlide(presentation);
 	    		break;
-	    	}
-	    	case BEEP: {
+	    	case BEEP:
 	    		newAction = new Beep();
 	    		break;
-	    	}
-	    	case NEW_FILE: {
+	    	case NEW_FILE:
 	    		newAction = new NewFile(presentation);
 	    		break;
-	    	}
-	    	case SAVE_FILE: {
+	    	case SAVE_FILE:
 	    		newAction = new SaveFile(presentation);
 	    		break;
-	    	}
+	    	case ABOUT:
+	    		newAction = new About();
+	    		break;
+	    	default: 
+	    		new JabberPointException(null, ACTION_ERROR, ACTION_ERROR_MESSAGE);	    	
 	    }
     	if (newAction != null) {
     		actionPool.put(key, newAction);

@@ -1,4 +1,4 @@
-package main;
+package accessor;
 import java.util.Vector;
 import java.io.File;
 import java.io.IOException;

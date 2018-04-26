@@ -31,7 +31,7 @@ Check navigation buttons on next slide...</text>
 <title>Navigation buttons</title>
 <items>
 <action name="previousslide">
-<text level="1">
+<text level="2">
 Vorige slide</text>
 </action><action name="previousslide">
 <image level="2">

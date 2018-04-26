@@ -2,6 +2,7 @@ package model;
 import java.util.ArrayList;
 
 import view.SlideViewerComponent;
+import view.SlideViewerFrame;
 
 
 /**
@@ -53,12 +54,10 @@ public class Presentation {
 		return currentSlideNumber;
 	}
 
-	// verander het huidige-slide-nummer en laat het aan het window weten.
+	// verander het huidige-slide-nummer en laat het weten.
 	public void setSlideNumber(int number) {
 		currentSlideNumber = number;
-		if (slideViewComponent != null) {
-			slideViewComponent.update(this, getCurrentSlide());
-		}
+		update();
 	}
 
 	// ga naar de vorige slide tenzij je aan het begin van de presentatie bent
@@ -99,7 +98,14 @@ public class Presentation {
 		return getSlide(currentSlideNumber);
 	}
 
-	public void exit(int n) {
-		System.exit(n);
+	public void update() {
+		if (slideViewComponent != null) {
+			slideViewComponent.update(this, getCurrentSlide());
+		}
+	}
+
+	public void start() {
+		setSlideNumber(0);
+		update();
 	}
 }

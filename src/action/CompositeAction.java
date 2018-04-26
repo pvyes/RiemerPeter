@@ -1,24 +1,37 @@
-package actions;
+package action;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import main.JabberPointException;
 
 /**
  * @author peter
  *
  */
 public class CompositeAction implements Action {
+	private static final String CAE = "Composite Action Error"; 
+	private static final String CAE_MESSAGE = "Composite Actions interrupted"; 
 	
 	private ArrayList<Action> actions;
-	protected String key;
+	private String key;
+	private int delay;
 	
 	protected CompositeAction(String key) {
 		this.key = key;
 		actions = new ArrayList<Action>();
+		delay = 500;
 	}
 	
 	public void performAction() {
-		actions.forEach(action->action.performAction());
+		actions.forEach(action-> {
+			action.performAction();
+	        try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				new JabberPointException(e, CAE, CAE_MESSAGE);
+			}
+		});
 	}
 	
 	/** Add a single action to a composite action */
@@ -47,6 +60,11 @@ public class CompositeAction implements Action {
             if (action.getKey() == actionKey) {
                 result.add(action);
             }
+            try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				new JabberPointException(e, CAE, CAE_MESSAGE);
+			}
         });
         return result;
 	}
@@ -54,5 +72,20 @@ public class CompositeAction implements Action {
 	/** return the key */
 	public String getKey() {
 		return key;
-	} 
+	}
+	
+	/**
+	 * @return the delay
+	 */
+	public int getDelay() {
+		return delay;
+	}
+
+	/**
+	 * @param delay the delay to set
+	 */
+	public void setDelay(int delay) {
+		this.delay = delay;
+	}
+
 }

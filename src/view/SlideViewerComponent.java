@@ -38,9 +38,9 @@ public class SlideViewerComponent extends JComponent {
 	private static final int XPOS = 1100; //x-position of slide number information
 	private static final int YPOS = 20;	//y-position of slide number information
 
-	public SlideViewerComponent(Presentation pres, JFrame frame) {
+	public SlideViewerComponent(Presentation presentation, JFrame frame) {
 		setBackground(BGCOLOR); 
-		presentation = pres;
+		this.presentation = presentation;
 		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
 		this.frame = frame;
 	}

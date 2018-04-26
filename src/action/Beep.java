@@ -1,4 +1,4 @@
-package actions;
+package action;
 
 import java.awt.Toolkit;
 

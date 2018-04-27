@@ -37,6 +37,9 @@ public class SlideViewerComponent extends JComponent {
 	private static final int FONTHEIGHT = 10;
 	private static final int XPOS = 1100; //x-position of slide number information
 	private static final int YPOS = 20;	//y-position of slide number information
+	private static final int SLIDEWIDTH = 1200;
+	private static final int SLIDEHEIGHT = 800;
+	
 
 	public SlideViewerComponent(Presentation presentation, JFrame frame) {
 		setBackground(BGCOLOR); 
@@ -46,7 +49,7 @@ public class SlideViewerComponent extends JComponent {
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(Slide.WIDTH, Slide.HEIGHT);
+		return new Dimension(SLIDEWIDTH, SLIDEHEIGHT);
 	}
 
 	public void update(Presentation presentation, Slide data) {
@@ -72,6 +75,13 @@ public class SlideViewerComponent extends JComponent {
 		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                  presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
-		slide.draw(g, area, this);
+//		slide.draw(g, area, this);
+		SlideDrawer s = new SlideDrawer(slide, this);
+		s.draw(area.x, area.y, getScale(area), g, null, this);
+	}
+	
+	// geef de schaal om de slide te kunnen tekenen
+	private float getScale(Rectangle area) {
+		return Math.min(((float)area.width) / ((float)SLIDEWIDTH), ((float)area.height) / ((float)SLIDEHEIGHT));
 	}
 }

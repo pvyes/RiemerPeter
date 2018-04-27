@@ -52,7 +52,7 @@ public class BitmapItem extends SlideItem {
 	public String getName() {
 		return imageName;
 	}
-
+/*
 // geef de bounding box van de afbeelding
 	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style myStyle) {
 		return new Rectangle((int) (myStyle.getIndent() * scale), 0,
@@ -68,7 +68,7 @@ public class BitmapItem extends SlideItem {
 		g.drawImage(bufferedImage, width, height,(int) (bufferedImage.getWidth(observer)*scale),
                 (int) (bufferedImage.getHeight(observer)*scale), observer);
 	}
-
+*/
 	public String toString() {
 		return "BitmapItem[" + getLevel() + "," + imageName + "]";
 	}

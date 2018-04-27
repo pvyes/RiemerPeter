@@ -51,6 +51,11 @@ public class Slide {
 	}
 
 	// verander de titel van de slide
+	public TextItem getTitleAsTextItem() {
+		/* Geef nu de tekst van het TextItem terug */
+		return title;
+	}
+
 	public void setTitle(String newTitle) {
 		/* Creëer nu een TextItem op basis van de nieuwe titel */
 		title = new TextItem(0, newTitle);
@@ -80,13 +85,13 @@ public class Slide {
 	public int getSize() {
 		return items.size();
 	}
-
+/*
 	public void draw(Graphics g, Rectangle area, ImageObserver view) {
 		float scale = getScale(area);
 	    int y = area.y;
 	    int panelY = y; //holds the y-position relative to the main panel
 		/* De titel hoeft niet meer apart behandeld te worden */
-	    SlideItem slideItem = this.title;
+/*	    SlideItem slideItem = this.title;
 	    Style style = Style.getStyle(slideItem.getLevel());
 	    slideItem.draw(area.x, y, scale, g, style, view);
 	    int titleHeight = slideItem.getBoundingBox(g, view, scale, style).height;
@@ -116,11 +121,11 @@ public class Slide {
 	}
 
 	private Rectangle drawBorders(Graphics g, int panelY, Rectangle rect) {
-		Graphics2D g2 = (Graphics2D) g;
+/*		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(STROKE_THICKNESS));
         g2.setColor(Color.LIGHT_GRAY);
         Rectangle borderRectangle = new Rectangle(rect.x - BORDER_OFFSET_LEFT, panelY - BORDER_OFFSET_TOP, rect.width + BORDER_OFFSET_RIGHT, rect.height + BORDER_OFFSET_BOTTOM);
         g2.draw(borderRectangle);
         return borderRectangle;
-    }
-}
+   return null;}
+*/}

@@ -48,7 +48,7 @@ public class TextItem extends SlideItem {
 	public String getText() {
 		return text == null ? "" : text;
 	}
-
+/*
 // geef de AttributedString voor het item
 	public AttributedString getAttributedString(Style style, float scale) {
 		AttributedString attrStr = new AttributedString(getText());
@@ -74,7 +74,7 @@ public class TextItem extends SlideItem {
 			ysize += layout.getLeading() + layout.getDescent();
 		}
 		return new Rectangle((int) (myStyle.getIndent()*scale), 0, xsize, ysize );
-	}
+		}
 
 // teken het item
 	public void draw(int x, int y, float scale, Graphics g, 
@@ -109,7 +109,7 @@ public class TextItem extends SlideItem {
     	}
     	return layouts;
 	}
-
+*/	
 	public String toString() {
 		return "TextItem[" + getLevel()+","+getText()+"]";
 	}

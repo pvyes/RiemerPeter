@@ -1,4 +1,4 @@
-package main;
+package accessor;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.List;
@@ -13,9 +13,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import actions.Action;
-import actions.ActionFactory;
-import actions.CompositeAction;
+import action.Action;
+import action.ActionFactory;
+import action.CompositeAction;
+import main.JabberPoint;
+import main.JabberPointException;
 import model.BitmapItem;
 import model.Presentation;
 import model.Slide;
@@ -61,6 +63,10 @@ public class XMLAccessor extends Accessor {
     protected static final String PCE = "Parser Configuration Exception";
     protected static final String UNKNOWNTYPE = "Unknown Element type";
     protected static final String NFE = "Number Format Exception";
+    protected static final String LEVEL_MESSAGE = "Wrong levelnumber.";
+    
+    private String errorstring = "";
+    private Exception exception;
     
 	public void loadFile(Presentation presentation, String filename) throws IOException {
 		try {
@@ -70,17 +76,26 @@ public class XMLAccessor extends Accessor {
 			
 			parseHeader(presentation, doc);
 			parseSlides(presentation, doc);
+			JabberPoint.setAccessor(this);
 		} 
 		catch (IOException iox) {
+			errorstring += "\n" + iox.toString();
+			exception = iox;
 			System.err.println(iox.toString());
 		}
 		catch (SAXException sax) {
+			errorstring += "\n" + sax.getMessage();
+			exception = sax;
 			System.err.println(sax.getMessage());
 		}
 		catch (ParserConfigurationException pcx) {
+			errorstring += "";
+			exception = pcx;
 			System.err.println(PCE);
 		}
-		
+		if (!errorstring.isEmpty()) {
+			new JabberPointException(exception, PCE, errorstring);
+		}		
 	}
 
 	/**
@@ -199,6 +214,8 @@ public class XMLAccessor extends Accessor {
 				level = Integer.parseInt(leveltext);
 			}
 			catch(NumberFormatException x) {
+				errorstring += "\n" + NFE;
+				exception = x;
 				System.err.println(NFE);
 			}
 		}
@@ -219,6 +236,8 @@ public class XMLAccessor extends Accessor {
 				level = Integer.parseInt(leveltext);
 			}
 			catch(NumberFormatException x) {
+				errorstring += "\n" + NFE;
+				exception = x;
 				System.err.println(NFE);
 			}
 		}

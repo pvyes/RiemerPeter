@@ -1,5 +1,4 @@
-
-package actions;
+package action;
 
 import model.Presentation;
 
@@ -7,17 +6,13 @@ import model.Presentation;
  * @author peter
  *
  */
-public class LastSlide implements Action {
+public class PreviousSlide implements Action {
 	private String key;
 	private Presentation presentation;
 	
-	protected LastSlide(Presentation presentation) {
-		key = ActionFactory.LAST_SLIDE;
+	protected PreviousSlide(Presentation presentation) {
+		key = ActionFactory.PREVIOUS_SLIDE;
 		this.presentation = presentation;
-	}
-	
-	public void performAction() {
-		presentation.setSlideNumber(presentation.getSize() - 1);		
 	}
 
 	/**
@@ -34,7 +29,14 @@ public class LastSlide implements Action {
 		this.presentation = presentation;
 	}
 
-	public String getKey() {		
+	public void performAction() {
+		int currentSlideNumber = presentation.getSlideNumber();
+		if (currentSlideNumber > 0) {
+			presentation.setSlideNumber(currentSlideNumber - 1);
+		}		
+	}
+
+	public String getKey() {
 		return key;
 	}
 }

@@ -1,4 +1,6 @@
-package main;
+package accessor;
+import main.JabberPoint;
+import main.JabberPointException;
 import model.BitmapItem;
 import model.Presentation;
 import model.Slide;
@@ -14,6 +16,7 @@ import model.Slide;
  */
 
 class DemoPresentation extends Accessor {
+	public static final String ISE = "Illegal State Exception)";
 
 	public void loadFile(Presentation presentation, String unusedFilename) {
 		presentation.setTitle("Demo Presentation");
@@ -51,9 +54,11 @@ class DemoPresentation extends Accessor {
 		slide.append(1, "Dit is het einde van de presentatie.");
 		slide.append(new BitmapItem(1, "JabberPoint.jpg"));
 		presentation.append(slide);
+		
+		JabberPoint.setAccessor(this);
 	}
 
 	public void saveFile(Presentation presentation, String unusedFilename) {
-		throw new IllegalStateException("Save As->Demo! aangeroepen");
+		new JabberPointException(new IllegalStateException(), ISE, "Save As->Demo! aangeroepen");
 	}
 }

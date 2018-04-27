@@ -1,5 +1,5 @@
 
-package actions;
+package action;
 
 import model.Presentation;
 
@@ -7,17 +7,17 @@ import model.Presentation;
  * @author peter
  *
  */
-public class FirstSlide implements Action {
+public class LastSlide implements Action {
 	private String key;
 	private Presentation presentation;
 	
-	protected FirstSlide(Presentation presentation) {
-		key = ActionFactory.FIRST_SLIDE;
+	protected LastSlide(Presentation presentation) {
+		key = ActionFactory.LAST_SLIDE;
 		this.presentation = presentation;
 	}
 	
 	public void performAction() {
-		presentation.setSlideNumber(0);		
+		presentation.setSlideNumber(presentation.getSize() - 1);		
 	}
 
 	/**

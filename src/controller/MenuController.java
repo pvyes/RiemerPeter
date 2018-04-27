@@ -9,18 +9,17 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
-import actions.ActionFactory;
-import actions.GoToSlide;
-import actions.NewFile;
-import actions.NextSlide;
-import actions.OpenFile;
-import actions.PreviousSlide;
-import actions.SaveFile;
-import actions.SystemExit;
+import action.About;
+import action.ActionFactory;
+import action.GoToSlide;
+import action.NewFile;
+import action.NextSlide;
+import action.OpenFile;
+import action.PreviousSlide;
+import action.SaveFile;
+import action.SystemExit;
 
-import main.AboutBox;
 import main.JabberPoint;
-
 import model.Presentation;
 
 /** <p>De controller voor het menu</p>
@@ -66,15 +65,10 @@ public class MenuController extends MenuBar {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				OpenFile openFile = (OpenFile) af.getAction(ActionFactory.OPEN_FILE);
+				//TODO input
 				openFile.setFilename(JabberPoint.TESTFILE);
 				openFile.performAction();
-/*					xmlAccessor.loadFile(presentation, TESTFILE);
-					presentation.setSlideNumber(0);
-				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
-         			LOADERR, JOptionPane.ERROR_MESSAGE);
-				}
-*///				parent.repaint();
+//				parent.repaint();
 			}
 		} );
 		fileMenu.add(menuItem = mkMenuItem(NEW));
@@ -88,17 +82,11 @@ public class MenuController extends MenuBar {
 		fileMenu.add(menuItem = mkMenuItem(SAVE));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO Input
 				SaveFile saveFile = (SaveFile) af.getAction(ActionFactory.SAVE_FILE);
 				saveFile.setFilename(JabberPoint.SAVEFILE);
 				saveFile.performAction();
-/*				Accessor xmlAccessor = new XMLAccessor();
-				try {
-					xmlAccessor.saveFile(presentation, SAVEFILE);
-				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
-							SAVEERR, JOptionPane.ERROR_MESSAGE);
-				}
-*/			}
+			}
 		});
 		fileMenu.addSeparator();
 		fileMenu.add(menuItem = mkMenuItem(EXIT));
@@ -127,10 +115,8 @@ public class MenuController extends MenuBar {
 		viewMenu.add(menuItem = mkMenuItem(GOTO));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
-				int pageNumber = Integer.parseInt(pageNumberStr);
+				//TODO input to action
 				GoToSlide goToSlide = (GoToSlide)af.getAction(ActionFactory.GO_TO_SLIDE);
-				goToSlide.setPageNumber(pageNumber);
 				goToSlide.performAction();
 			}
 		});
@@ -139,7 +125,8 @@ public class MenuController extends MenuBar {
 		helpMenu.add(menuItem = mkMenuItem(ABOUT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				AboutBox.show(parent);
+				About about = (About)af.getAction(ActionFactory.ABOUT);
+				about.performAction();
 			}
 		});
 		setHelpMenu(helpMenu);		// nodig for portability (Motif, etc.).

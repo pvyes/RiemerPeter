@@ -1,6 +1,6 @@
+package action;
 
-package actions;
-
+import controller.UserInteraction;
 import model.Presentation;
 
 /**
@@ -8,6 +8,10 @@ import model.Presentation;
  *
  */
 public class GoToSlide implements Action {
+	private static final String TITLE = "Ga naar ";
+	private static final String QUESTION = "Geef de bladzijde:";
+	private static final String DEFAULT_VALUE = "1";
+	
 	private String key;
 	private Presentation presentation;
 	private int pageNumber;
@@ -19,6 +23,8 @@ public class GoToSlide implements Action {
 	}
 	
 	public void performAction() {
+		UserInteraction ui = new UserInteraction(UserInteraction.INPUT, TITLE, QUESTION, DEFAULT_VALUE);
+		int pageNumber = Integer.parseInt(ui.getAnswer());
 		presentation.setSlideNumber(pageNumber - 1);		
 	}
 

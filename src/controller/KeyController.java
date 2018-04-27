@@ -1,10 +1,10 @@
 package controller;
 import java.awt.event.KeyEvent;
 
-import actions.ActionFactory;
-import actions.NextSlide;
-import actions.PreviousSlide;
-import actions.SystemExit;
+import action.ActionFactory;
+import action.NextSlide;
+import action.PreviousSlide;
+import action.SystemExit;
 import main.JabberPoint;
 import model.Presentation;
 

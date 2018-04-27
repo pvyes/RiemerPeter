@@ -3,7 +3,7 @@ import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
 
-import actions.Action;
+import action.Action;
 import view.Style;
 
 /** <p>De abstracte klasse voor een item op een Slide<p>

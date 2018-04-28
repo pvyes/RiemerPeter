@@ -26,13 +26,18 @@ public class GoToSlide implements Action {
 	
 	public void performAction() {
 		InputInteraction ii = (InputInteraction) UIFactory.createUserInteraction(UIFactory.INPUT);
+		int pageNumber = getPageNumberFromUser(ii);
+		presentation.setSlideNumber(pageNumber - 1);		
+	}
+
+	private int getPageNumberFromUser(InputInteraction ii) {
 		ii.setView(presentation.getShowView());
 		ii.setTitle(TITLE);
 		ii.setMessage(QUESTION);
 		ii.setDefaultValue(DEFAULT_VALUE);
 		ii.show();
 		int pageNumber = Integer.parseInt(ii.getAnswer());
-		presentation.setSlideNumber(pageNumber - 1);		
+		return pageNumber;
 	}
 
 	/**

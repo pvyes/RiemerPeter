@@ -34,6 +34,16 @@ public class OpenFile implements Action {
 	public void performAction() {
 		XMLAccessor accessor = new XMLAccessor();
 		presentation.clear();
+		String filename = getFileNameFromUser();
+		try {
+			accessor.loadFile(presentation, filename);
+		} catch (IOException e) {
+			new JabberPointException(e, IOE, IO_MESSAGE);
+		}
+		presentation.setSlideNumber(0);
+	}
+
+	private String getFileNameFromUser() {
 		InputInteraction ii = (InputInteraction) UIFactory.createUserInteraction(UIFactory.INPUT);
 		ii.setView(presentation.getShowView());
 		ii.setTitle(TITLE);
@@ -41,12 +51,7 @@ public class OpenFile implements Action {
 		ii.setDefaultValue(DEFAULT_VALUE);
 		ii.show();
 		String filename = ii.getAnswer();
-		try {
-			accessor.loadFile(presentation, filename);
-		} catch (IOException e) {
-			new JabberPointException(e, IOE, IO_MESSAGE);
-		}
-		presentation.setSlideNumber(0);
+		return filename;
 	}
 
 	/**

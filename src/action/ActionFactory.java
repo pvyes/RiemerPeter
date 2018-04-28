@@ -29,7 +29,7 @@ public class ActionFactory {
 	private static Presentation presentation;
 	
     private static final ActionFactory instance = new ActionFactory();
-    private HashMap<String, Action> actionPool;
+    private static HashMap<String, Action> actionPool;
     
     //private constructor to avoid client applications to use constructor
     private ActionFactory(){
@@ -111,5 +111,9 @@ public class ActionFactory {
     	}
     	actionPool.put(actionKey, ca);
     	return ca;    	
+    }
+    
+    public static void clearActionPool() {
+    	actionPool.clear();
     }
 }

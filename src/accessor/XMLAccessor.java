@@ -69,6 +69,7 @@ public class XMLAccessor extends Accessor {
     private Exception exception;
     
 	public void loadFile(Presentation presentation, String filename) throws IOException {
+		presentation.clear();
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();    
 			Document document = builder.parse(new File(filename)); // maak een JDOM document

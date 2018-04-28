@@ -1,6 +1,7 @@
 package model;
 import java.util.ArrayList;
 
+import action.ActionFactory;
 import view.SlideViewerComponent;
 
 /**
@@ -71,6 +72,7 @@ public class Presentation {
 	// Verwijder de presentatie, om klaar te zijn voor de volgende
 	public void clear() {
 		showList = new ArrayList<Slide>();
+		currentSlideNumber = 0;
 		setSlideNumber(-1);
 	}
 

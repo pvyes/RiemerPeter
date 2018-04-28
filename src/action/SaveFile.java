@@ -35,6 +35,15 @@ public class SaveFile implements Action {
 
 	public void performAction() {
 		accessor = JabberPoint.getAccessor();
+		String filename = getFileNameFromUser();
+		try {
+			accessor.saveFile(presentation, filename);
+		} catch (IOException e) {
+			new JabberPointException(e, IOE, IO_MESSAGE);
+		}
+	}
+
+	private String getFileNameFromUser() {
 		InputInteraction ii = (InputInteraction) UIFactory.createUserInteraction(UIFactory.INPUT);
 		ii.setView(presentation.getShowView());
 		ii.setTitle(TITLE);
@@ -42,11 +51,7 @@ public class SaveFile implements Action {
 		ii.setDefaultValue(DEFAULT_VALUE);
 		ii.show();
 		String filename = ii.getAnswer();
-		try {
-			accessor.saveFile(presentation, filename);
-		} catch (IOException e) {
-			new JabberPointException(e, IOE, IO_MESSAGE);
-		}
+		return filename;
 	}
 
 	public String getFilename() {

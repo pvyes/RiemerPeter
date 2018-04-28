@@ -15,5 +15,6 @@ public interface SlideItemDrawer extends Drawer {
 	
 	// Geef de bounding box
 		public Rectangle getBoundingBox(Graphics g, 
-				ImageObserver observer, float scale, Style style);
+//				float scale, ImageObserver observer);
+		float scale, ImageObserver observer);
 }

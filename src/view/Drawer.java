@@ -12,5 +12,5 @@ public interface Drawer {
 	
 	// teken het item
 		public void draw(int x, int y, float scale, 
-				Graphics g, Style style, ImageObserver observer);
+				Graphics g, ImageObserver observer);
 }

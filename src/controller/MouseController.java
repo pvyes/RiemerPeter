@@ -9,28 +9,27 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputAdapter;
 
-import model.Presentation;
-import model.Slide;
 import model.SlideItem;
+import view.SlideViewerComponent;
+import view.SlideViewerFrame;
 
 /**
  * @author peter
  *
  */
 public class MouseController extends MouseInputAdapter implements MouseListener {
-	Presentation presentation;
-	JFrame frame;
+	private SlideViewerFrame frame;
+	private SlideViewerComponent svc;
 	
-	public MouseController(JFrame f, Presentation p) {
-		frame = f;
-		presentation = p;
+	public MouseController(JFrame f) {
+		frame = (SlideViewerFrame) f;
+		svc = frame.getSlideViewerComponent();
 	}
 
 	public void mouseClicked(MouseEvent e) {
 		//get the position of the mouseclick
 		Point2D p = e.getPoint();
-		Slide slide = presentation.getCurrentSlide();
-		Map<SlideItem, Rectangle> bbs = slide.getBoundingBoxes();
+		Map<SlideItem, Rectangle> bbs = svc.getBoundingBoxes();
 		for (Map.Entry<SlideItem, Rectangle> entry : bbs.entrySet()) {
 			Rectangle r = entry.getValue();
 			SlideItem si = entry.getKey();

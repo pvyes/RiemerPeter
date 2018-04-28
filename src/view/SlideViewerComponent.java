@@ -4,11 +4,15 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import model.Presentation;
 import model.Slide;
+import model.SlideItem;
 
 
 /** <p>SlideViewerComponent is een grafische component die Slides kan laten zien.</p>
@@ -40,6 +44,7 @@ public class SlideViewerComponent extends JComponent {
 	private static final int SLIDEWIDTH = 1200;
 	private static final int SLIDEHEIGHT = 800;
 	
+	private Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
 
 	public SlideViewerComponent(Presentation presentation, JFrame frame) {
 		setBackground(BGCOLOR); 
@@ -50,6 +55,11 @@ public class SlideViewerComponent extends JComponent {
 
 	public Dimension getPreferredSize() {
 		return new Dimension(SLIDEWIDTH, SLIDEHEIGHT);
+	}
+	
+	// geef alle boundingBoxes in een Vector
+	public Map<SlideItem, Rectangle> getBoundingBoxes() {
+		return boundingBoxes;
 	}
 
 	public void update(Presentation presentation, Slide data) {
@@ -77,7 +87,7 @@ public class SlideViewerComponent extends JComponent {
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
 //		slide.draw(g, area, this);
 		SlideDrawer s = new SlideDrawer(slide, this);
-		s.draw(area.x, area.y, getScale(area), g, null, this);
+		s.draw(area.x, area.y, getScale(area), g, this);
 	}
 	
 	// geef de schaal om de slide te kunnen tekenen

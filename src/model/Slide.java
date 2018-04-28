@@ -25,15 +25,11 @@ import view.Style;
 public class Slide {
 	public final static int WIDTH = 1200;
 	public final static int HEIGHT = 800;
-	private static final float STROKE_THICKNESS = 2;
-	private static final int BORDER_OFFSET_LEFT = 2;
-	private static final int BORDER_OFFSET_BOTTOM = -8;
-	private static final int BORDER_OFFSET_TOP = 8;
-	private static final int BORDER_OFFSET_RIGHT = 8;
 	/* Geen String meer maar een TextItem */
 	protected TextItem title; // de titel wordt apart bewaard
 	protected Vector<SlideItem> items; // de slide-items worden in een Vector bewaard
-	protected Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
+	//TODO
+//	protected Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
 
 	public Slide() {
 		items = new Vector<SlideItem>();
@@ -77,12 +73,12 @@ public class Slide {
 	}
 
 	// geef alle boundingBoxes in een Vector
-	public Map<SlideItem, Rectangle> getBoundingBoxes() {
+/*	public Map<SlideItem, Rectangle> getBoundingBoxes() {
 		return boundingBoxes;
 	}
-
+*/
 	// geef de afmeting van de Slide
-	public int getSize() {
+	public int getNumberOfSlideItems() {
 		return items.size();
 	}
 /*

@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Graphics;
@@ -37,7 +38,7 @@ public class TextItemDrawer implements SlideItemDrawer {
 	 * @see view.Drawer#draw(int, int, float, java.awt.Graphics, view.Style, java.awt.image.ImageObserver)
 	 */
 	@Override
-	public void draw(int x, int y, float scale, Graphics g, Style style, ImageObserver observer) {
+	public void draw(int x, int y, float scale, Graphics g, ImageObserver observer) {
 		if (text == null || text.length() == 0) {
 			return;
 		}
@@ -77,7 +78,8 @@ public class TextItemDrawer implements SlideItemDrawer {
 	 * @see view.SlideItemDrawer#getBoundingBox(java.awt.Graphics, java.awt.image.ImageObserver, float, view.Style)
 	 */
 	@Override
-	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style style) {
+//	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale) {
+	public Rectangle getBoundingBox(Graphics g, float scale, ImageObserver observer) {
 		List<TextLayout> layouts = getLayouts(g, myStyle, scale);
 		int xsize = 0, ysize = (int) (myStyle.getLeading() * scale);
 		Iterator<TextLayout> iterator = layouts.iterator();

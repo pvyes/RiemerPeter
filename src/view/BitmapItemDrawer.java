@@ -39,7 +39,7 @@ public class BitmapItemDrawer implements SlideItemDrawer {
 	 * @see view.Drawer#draw(int, int, float, java.awt.Graphics, view.Style, java.awt.image.ImageObserver)
 	 */
 	@Override
-	public void draw(int x, int y, float scale, Graphics g, Style style, ImageObserver observer) {
+	public void draw(int x, int y, float scale, Graphics g, ImageObserver observer) {
 		int width = x + (int) (myStyle.getIndent() * scale);
 		int height = y + (int) (myStyle.getLeading() * scale);
 		g.drawImage(bufferedImage, width, height,(int) (bufferedImage.getWidth(observer)*scale),
@@ -50,7 +50,8 @@ public class BitmapItemDrawer implements SlideItemDrawer {
 	 * @see view.SlideItemDrawer#getBoundingBox(java.awt.Graphics, java.awt.image.ImageObserver, float, view.Style)
 	 */
 	@Override
-	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style style) {
+//	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale) {
+	public Rectangle getBoundingBox(Graphics g, float scale, ImageObserver observer) {
 		return new Rectangle((int) (myStyle.getIndent() * scale), 0,
 				(int) (bufferedImage.getWidth(observer) * scale),
 				((int) (myStyle.getLeading() * scale)) + 

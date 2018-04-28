@@ -1,5 +1,7 @@
 package action;
 
+import controller.InputInteraction;
+import controller.UIFactory;
 import controller.UserInteraction;
 import model.Presentation;
 
@@ -23,8 +25,13 @@ public class GoToSlide implements Action {
 	}
 	
 	public void performAction() {
-		UserInteraction ui = new UserInteraction(UserInteraction.INPUT, TITLE, QUESTION, DEFAULT_VALUE);
-		int pageNumber = Integer.parseInt(ui.getAnswer());
+		InputInteraction ii = (InputInteraction) UIFactory.createUserInteraction(UIFactory.INPUT);
+		ii.setView(presentation.getShowView());
+		ii.setTitle(TITLE);
+		ii.setMessage(QUESTION);
+		ii.setDefaultValue(DEFAULT_VALUE);
+		ii.show();
+		int pageNumber = Integer.parseInt(ii.getAnswer());
 		presentation.setSlideNumber(pageNumber - 1);		
 	}
 

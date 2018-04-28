@@ -1,4 +1,3 @@
-
 package view;
 
 import java.awt.Graphics;
@@ -34,9 +33,6 @@ public class TextItemDrawer implements SlideItemDrawer {
 		this.myStyle = Style.getStyle(textItem.getLevel());
 	}
 
-	/* (non-Javadoc)
-	 * @see view.Drawer#draw(int, int, float, java.awt.Graphics, view.Style, java.awt.image.ImageObserver)
-	 */
 	@Override
 	public void draw(int x, int y, float scale, Graphics g, ImageObserver observer) {
 		if (text == null || text.length() == 0) {
@@ -55,28 +51,7 @@ public class TextItemDrawer implements SlideItemDrawer {
 			pen.y += layout.getDescent();
 		}		
 	}
-	
-	public void draw(Graphics g, Rectangle area, float scale, ImageObserver view) {
-		if (text == null || text.length() == 0) {
-			return;
-		}
-		List<TextLayout> layouts = getLayouts(g, myStyle, scale);
-		Point pen = new Point(area.x + (int)(myStyle.getIndent() * scale), 
-				area.y + (int) (myStyle.getLeading() * scale));
-		Graphics2D g2d = (Graphics2D)g;
-		g2d.setColor(myStyle.getColor());
-		Iterator<TextLayout> it = layouts.iterator();
-		while (it.hasNext()) {
-			TextLayout layout = it.next();
-			pen.y += layout.getAscent();
-			layout.draw(g2d, pen.x, pen.y);
-			pen.y += layout.getDescent();
-		}		
-	}
-	
-	/* (non-Javadoc)
-	 * @see view.SlideItemDrawer#getBoundingBox(java.awt.Graphics, java.awt.image.ImageObserver, float, view.Style)
-	 */
+
 	@Override
 //	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale) {
 	public Rectangle getBoundingBox(Graphics g, float scale, ImageObserver observer) {

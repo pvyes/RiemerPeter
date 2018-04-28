@@ -3,7 +3,8 @@ package action;
 import java.io.IOException;
 
 import accessor.XMLAccessor;
-import controller.UserInteraction;
+import controller.InputInteraction;
+import controller.UIFactory;
 import main.JabberPoint;
 import main.JabberPointException;
 import model.Presentation;
@@ -33,8 +34,13 @@ public class OpenFile implements Action {
 	public void performAction() {
 		XMLAccessor accessor = new XMLAccessor();
 		presentation.clear();
-		UserInteraction ui = new UserInteraction(UserInteraction.INPUT, TITLE, QUESTION, DEFAULT_VALUE);
-		String filename = ui.getAnswer();
+		InputInteraction ii = (InputInteraction) UIFactory.createUserInteraction(UIFactory.INPUT);
+		ii.setView(presentation.getShowView());
+		ii.setTitle(TITLE);
+		ii.setMessage(QUESTION);
+		ii.setDefaultValue(DEFAULT_VALUE);
+		ii.show();
+		String filename = ii.getAnswer();
 		try {
 			accessor.loadFile(presentation, filename);
 		} catch (IOException e) {

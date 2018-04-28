@@ -74,7 +74,7 @@ public class JabberPoint {
 	
 	private static void addControllers(SlideViewerFrame mainframe, Presentation presentation) {
 		mainframe.addKeyListener(new KeyController(presentation));
-		mainframe.setMenuBar(new MenuController(mainframe, presentation));
+		mainframe.setMenuBar(new MenuController(presentation));
 		mainframe.addMouseListener(new MouseController(mainframe));		
 	}
 }

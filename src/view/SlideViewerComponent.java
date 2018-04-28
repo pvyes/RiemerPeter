@@ -14,7 +14,6 @@ import model.Presentation;
 import model.Slide;
 import model.SlideItem;
 
-
 /** <p>SlideViewerComponent is een grafische component die Slides kan laten zien.</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.1 2002/12/17 Gert Florijn
@@ -85,7 +84,6 @@ public class SlideViewerComponent extends JComponent {
 		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                  presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
-//		slide.draw(g, area, this);
 		SlideDrawer s = new SlideDrawer(slide, this);
 		s.draw(area.x, area.y, getScale(area), g, this);
 	}

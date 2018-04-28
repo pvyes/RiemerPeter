@@ -1,6 +1,7 @@
 package main;
 
-import controller.UserInteraction;
+import controller.ErrorInteraction;
+import controller.UIFactory;
 
 /**
  * @author peter
@@ -9,12 +10,15 @@ import controller.UserInteraction;
 public class JabberPointException extends Exception {
  
 	public JabberPointException(Exception e, String messageTitle, String friendlyMessage) {
-		super();
+		super();		
 		String errormessage = "";
 		if (e != null) {
 			errormessage = e.getMessage();
 		}
 		String message = friendlyMessage +  "\n\n" + errormessage;
-		new UserInteraction(UserInteraction.ERROR, messageTitle, message);
+		ErrorInteraction ei = (ErrorInteraction) UIFactory.createUserInteraction(UIFactory.ERROR);
+		ei.setTitle(messageTitle);
+		ei.setMessage(message);
+		ei.show();
 	}
 }

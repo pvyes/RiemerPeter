@@ -1,5 +1,7 @@
 package action;
 
+import controller.MessageInteraction;
+import controller.UIFactory;
 import controller.UserInteraction;
 import main.JabberPoint;
 
@@ -15,7 +17,10 @@ public class About implements Action {
 	}
 
 	public void performAction() {
-	     new UserInteraction(UserInteraction.MESSAGE, "About", JabberPoint.ABOUT);
+		MessageInteraction mi = (MessageInteraction) UIFactory.createUserInteraction(UIFactory.MESSAGE);
+		mi.setTitle("About");
+		mi.setMessage(JabberPoint.ABOUT);
+	    mi.show();
 	}
 
 	public String getKey() {

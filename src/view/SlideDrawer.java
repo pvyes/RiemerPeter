@@ -77,11 +77,6 @@ public class SlideDrawer implements Drawer {
 	    }
 	}
 	
-	// geef de schaal om de slide te kunnen tekenen
-	private float getScale(Rectangle area) {
-		return Math.min(((float)area.width) / ((float)WIDTH), ((float)area.height) / ((float)HEIGHT));
-	}
-
 	private Rectangle drawBorders(Graphics g, int panelY, Rectangle rect) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(STROKE_THICKNESS));

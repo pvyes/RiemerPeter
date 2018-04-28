@@ -1,10 +1,6 @@
 package model;
-import java.awt.Rectangle;
-import java.awt.Graphics;
-import java.awt.image.ImageObserver;
 
 import action.Action;
-import view.Style;
 
 /** <p>De abstracte klasse voor een item op een Slide<p>
  * <p>Alle SlideItems hebben tekenfunctionaliteit.</p>
@@ -19,19 +15,12 @@ import view.Style;
 
 public abstract class SlideItem {
 	private int level = 0; // het level van het slideitem
-	private Rectangle boundingBox = null;
 	private Action action = null; //the action attached to this slideItem
 
-	/**
-	 * @return the action
-	 */
 	public Action getAction() {
 		return action;
 	}
 
-	/**
-	 * @param action the action to set
-	 */
 	public void setAction(Action action) {
 		this.action = action;
 	}
@@ -44,16 +33,8 @@ public abstract class SlideItem {
 		this(0);
 	}
 
-// Geef het level
+	// Geef het level
 	public int getLevel() {
 		return level;
 	}
-/*
-// Geef de bounding box
-	public abstract Rectangle getBoundingBox(Graphics g, 
-			ImageObserver observer, float scale, Style style);
-
-// teken het item
-	public abstract void draw(int x, int y, float scale, 
-			Graphics g, Style style, ImageObserver observer);
-*/}
+}

@@ -84,8 +84,8 @@ public class SlideViewerComponent extends JComponent {
 		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                  presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
-		SlideDrawer s = new SlideDrawer(slide, this);
-		s.draw(area.x, area.y, getScale(area), g, this);
+		SlideDrawer sd = (SlideDrawer) DrawerFactory.createDrawer(slide, this);
+		sd.draw(area.x, area.y, getScale(area), g, this);
 	}
 	
 	// geef de schaal om de slide te kunnen tekenen

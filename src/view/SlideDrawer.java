@@ -31,7 +31,7 @@ public class SlideDrawer implements Drawer {
 	private Slide slide;
 	private ImageObserver view;
 	
-	public SlideDrawer(Slide slide, ImageObserver view) {
+	protected SlideDrawer(Slide slide, ImageObserver view) {
 		this.slide = slide;
 		this.view = view;
 	}
@@ -44,26 +44,27 @@ public class SlideDrawer implements Drawer {
 		SlideViewerComponent mainframe = (SlideViewerComponent) observer;
 	    int panelY = y; //holds the y-position relative to the main panel
 		/* De titel hoeft niet meer apart behandeld te worden */
-	    SlideItem slideItem = slide.getTitleAsTextItem();
+	    SlideItem title = slide.getTitleAsTextItem();
 //	    slideItem.draw(area.x, y, scale, g, style, view); //TODO area in method or x en y...?
-	    SlideItemDrawer sd = new TextItemDrawer((TextItem) slideItem);
-	    sd.draw(x, y, scale, g, view);
-	    int titleHeight = sd.getBoundingBox(g, scale, view).height;
+	    SlideItemDrawer titleDrawer = (SlideItemDrawer) DrawerFactory.createDrawer(title);
+	    titleDrawer.draw(x, y, scale, g, view);
+	    int titleHeight = titleDrawer.getBoundingBox(g, scale, view).height;
 	    y += titleHeight;
 	    panelY += y;
 		for (int number=0; number<slide.getNumberOfSlideItems(); number++) {
-	      slideItem = (SlideItem)slide.getSlideItems().elementAt(number);
+	      SlideItem slideItem = (SlideItem)slide.getSlideItems().elementAt(number);
 	      //TODO factory?
-	      if (slideItem instanceof TextItem) {
+	      SlideItemDrawer sid = (SlideItemDrawer) DrawerFactory.createDrawer(slideItem);
+/*	      if (slideItem instanceof TextItem) {
 			  sd = new TextItemDrawer((TextItem) slideItem);	    	  
 	      }
 	      if (slideItem instanceof BitmapItem) {
 			  sd = new BitmapItemDrawer((BitmapItem) slideItem);	    	  
 	      }
-	      sd.draw(x, y, scale, g, view);
-	  	  int height = sd.getBoundingBox(g, scale, view).height;
+*/	      sid.draw(x, y, scale, g, view);
+	  	  int height = sid.getBoundingBox(g, scale, view).height;
 //	      Rectangle bb = sd.getBoundingBox(g, scale, observer);
-	      Rectangle bb = sd.getBoundingBox(g, scale, view);
+	      Rectangle bb = sid.getBoundingBox(g, scale, view);
 	      //if the slideItem has an associated action, draw a border rectangle an add it to the boundingboxes of the slide item
 	      if (slideItem.getAction() != null) {
 	    	  Rectangle borders = drawBorders(g, panelY, bb);

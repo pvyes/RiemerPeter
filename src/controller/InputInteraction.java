@@ -57,4 +57,4 @@ public class InputInteraction implements UserInteraction {
 	public String getAnswer() {
 		return answer;
 	}
-	}
+}

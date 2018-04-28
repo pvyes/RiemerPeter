@@ -27,7 +27,7 @@ public class TextItemDrawer implements SlideItemDrawer {
 	private String text;
 	private Style myStyle;
 	
-	public TextItemDrawer(TextItem item) {
+	protected TextItemDrawer(TextItem item) {
 		this.textItem = item;
 		this.text = textItem.getText();
 		this.myStyle = Style.getStyle(textItem.getLevel());

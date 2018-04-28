@@ -13,7 +13,6 @@ public class ErrorInteraction implements UserInteraction {
 	private String answer = "";
 	private JComponent view;
 
-
 	public void show() {
 		JOptionPane.showMessageDialog(view, message, title, JOptionPane.ERROR_MESSAGE);	
 	}

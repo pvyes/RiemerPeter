@@ -23,7 +23,7 @@ public class LastSlide implements Action {
 	public Presentation getPresentation() {
 		return presentation;
 	}
-
+  
 	public void setPresentation(Presentation presentation) {
 		this.presentation = presentation;
 	}

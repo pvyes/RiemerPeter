@@ -41,7 +41,6 @@ public class SaveFile implements Action {
 			new JabberPointException(e, IOE, IO_MESSAGE);
 		}
 	}
-
 	private String getFileNameFromUser() {
 		InputInteraction ii = (InputInteraction) UIFactory.createUserInteraction(UIFactory.INPUT);
 		ii.setView(presentation.getShowView());

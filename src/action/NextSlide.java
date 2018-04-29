@@ -43,5 +43,4 @@ public class NextSlide implements Action {
 	public String getKey() {
 		return key;
 	}
-
 }

@@ -18,7 +18,4 @@ public class SystemExit implements Action {
 	public String getKey() {
 		return key;
 	}
-	
-	
-
 }

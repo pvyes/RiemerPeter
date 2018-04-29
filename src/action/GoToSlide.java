@@ -39,30 +39,18 @@ public class GoToSlide implements Action {
 		return pageNumber;
 	}
 
-	/**
-	 * @return the presentation
-	 */
 	public Presentation getPresentation() {
 		return presentation;
 	}
 
-	/**
-	 * @param presentation the presentation to set
-	 */
 	public void setPresentation(Presentation presentation) {
 		this.presentation = presentation;
 	}
 
-	/**
-	 * @return the pageNumber
-	 */
 	public int getPageNumber() {
 		return pageNumber;
 	}
 
-	/**
-	 * @param pageNumber the pageNumber to set
-	 */
 	public void setPageNumber(int pageNumber) {
 		this.pageNumber = pageNumber;
 	}

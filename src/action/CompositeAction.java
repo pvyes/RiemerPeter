@@ -73,17 +73,11 @@ public class CompositeAction implements Action {
 	public String getKey() {
 		return key;
 	}
-	
-	/**
-	 * @return the delay
-	 */
+
 	public int getDelay() {
 		return delay;
 	}
 
-	/**
-	 * @param delay the delay to set
-	 */
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}

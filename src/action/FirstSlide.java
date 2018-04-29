@@ -36,5 +36,4 @@ public class FirstSlide implements Action {
 	public String getKey() {
 		return key;
 	}
-
 }

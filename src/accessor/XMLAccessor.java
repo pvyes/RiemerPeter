@@ -297,10 +297,6 @@ public class XMLAccessor extends Accessor {
 		out.close();
 	}
 
-	/**
-	 * @param out
-	 * @param action2
-	 */
 	private int printActionBeginTags(PrintWriter out, Action action) {
 		int nr = 0;
 		if (action instanceof CompositeAction) {

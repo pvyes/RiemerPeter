@@ -1,17 +1,4 @@
 package model;
-import java.awt.Rectangle;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.File;
-
-import javax.imageio.ImageIO;
-
-import action.ActionFactory;
-import view.Style;
-
-import java.io.IOException;
-
 
 /** <p>De klasse voor een Bitmap item</p>
  * <p>Bitmap items hebben de verantwoordelijkheid om zichzelf te tekenen.</p>
@@ -25,7 +12,6 @@ import java.io.IOException;
 */
 
 public class BitmapItem extends SlideItem {
-  private BufferedImage bufferedImage;
   private String imageName;
   
   protected static final String FILE = "Bestand ";
@@ -35,12 +21,6 @@ public class BitmapItem extends SlideItem {
 	public BitmapItem(int level, String name) {
 		super(level);
 		imageName = name;
-		try {
-			bufferedImage = ImageIO.read(new File(imageName));
-		}
-		catch (IOException e) {
-			System.err.println(FILE + imageName + NOTFOUND) ;
-		}
 	}
 
 // Een leeg bitmap-item
@@ -52,7 +32,7 @@ public class BitmapItem extends SlideItem {
 	public String getName() {
 		return imageName;
 	}
-
+/*
 // geef de bounding box van de afbeelding
 	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style myStyle) {
 		return new Rectangle((int) (myStyle.getIndent() * scale), 0,
@@ -68,7 +48,7 @@ public class BitmapItem extends SlideItem {
 		g.drawImage(bufferedImage, width, height,(int) (bufferedImage.getWidth(observer)*scale),
                 (int) (bufferedImage.getHeight(observer)*scale), observer);
 	}
-
+*/
 	public String toString() {
 		return "BitmapItem[" + getLevel() + "," + imageName + "]";
 	}

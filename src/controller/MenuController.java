@@ -1,13 +1,20 @@
 package controller;
 import java.awt.MenuBar;
-import java.awt.Frame;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JOptionPane;
+import action.About;
+import action.ActionFactory;
+import action.GoToSlide;
+import action.NewFile;
+import action.NextSlide;
+import action.OpenFile;
+import action.PreviousSlide;
+import action.SaveFile;
+import action.SystemExit;
 
 import action.About;
 import action.ActionFactory;
@@ -33,7 +40,6 @@ import model.Presentation;
  */
 public class MenuController extends MenuBar {
 	
-	private Frame parent; // het frame, alleen gebruikt als ouder voor de Dialogs
 	private ActionFactory af;
 	
 	private static final long serialVersionUID = 227L;
@@ -42,6 +48,7 @@ public class MenuController extends MenuBar {
 	protected static final String FILE = "File";
 	protected static final String EXIT = "Exit";
 	protected static final String GOTO = "Go to";
+	protected static final String SHOWPRESENTATION = "Show presentation";
 	protected static final String HELP = "Help";
 	protected static final String NEW = "New";
 	protected static final String NEXT = "Next";
@@ -56,8 +63,8 @@ public class MenuController extends MenuBar {
 	protected static final String LOADERR = "Load Error";
 	protected static final String SAVEERR = "Save Error";
 
-	public MenuController(Frame frame, Presentation pres) {
-		parent = frame;
+//	public MenuController(Frame frame, Presentation pres) {
+	public MenuController(Presentation pres) {
 		af = ActionFactory.getInstance(pres);
 		MenuItem menuItem;
 		Menu fileMenu = new Menu(FILE);
@@ -65,10 +72,8 @@ public class MenuController extends MenuBar {
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				OpenFile openFile = (OpenFile) af.getAction(ActionFactory.OPEN_FILE);
-				//TODO input
 				openFile.setFilename(JabberPoint.TESTFILE);
 				openFile.performAction();
-//				parent.repaint();
 			}
 		} );
 		fileMenu.add(menuItem = mkMenuItem(NEW));
@@ -76,7 +81,6 @@ public class MenuController extends MenuBar {
 			public void actionPerformed(ActionEvent actionEvent) {
 				NewFile newFile = (NewFile) af.getAction(ActionFactory.NEW_FILE);
 				newFile.performAction();
-//				parent.repaint();
 			}
 		});
 		fileMenu.add(menuItem = mkMenuItem(SAVE));
@@ -115,7 +119,6 @@ public class MenuController extends MenuBar {
 		viewMenu.add(menuItem = mkMenuItem(GOTO));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				//TODO input to action
 				GoToSlide goToSlide = (GoToSlide)af.getAction(ActionFactory.GO_TO_SLIDE);
 				goToSlide.performAction();
 			}

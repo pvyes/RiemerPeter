@@ -1,16 +1,6 @@
 package model;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.image.ImageObserver;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
 
-import view.Style;
+import java.util.Vector;
 
 /** <p>Een slide. Deze klasse heeft tekenfunctionaliteit.</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -25,15 +15,11 @@ import view.Style;
 public class Slide {
 	public final static int WIDTH = 1200;
 	public final static int HEIGHT = 800;
-	private static final float STROKE_THICKNESS = 2;
-	private static final int BORDER_OFFSET_LEFT = 2;
-	private static final int BORDER_OFFSET_BOTTOM = -8;
-	private static final int BORDER_OFFSET_TOP = 8;
-	private static final int BORDER_OFFSET_RIGHT = 8;
 	/* Geen String meer maar een TextItem */
 	protected TextItem title; // de titel wordt apart bewaard
 	protected Vector<SlideItem> items; // de slide-items worden in een Vector bewaard
-	protected Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
+	//TODO
+//	protected Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
 
 	public Slide() {
 		items = new Vector<SlideItem>();
@@ -51,6 +37,11 @@ public class Slide {
 	}
 
 	// verander de titel van de slide
+	public TextItem getTitleAsTextItem() {
+		/* Geef nu de tekst van het TextItem terug */
+		return title;
+	}
+
 	public void setTitle(String newTitle) {
 		/* Creëer nu een TextItem op basis van de nieuwe titel */
 		title = new TextItem(0, newTitle);
@@ -72,21 +63,21 @@ public class Slide {
 	}
 
 	// geef alle boundingBoxes in een Vector
-	public Map<SlideItem, Rectangle> getBoundingBoxes() {
+/*	public Map<SlideItem, Rectangle> getBoundingBoxes() {
 		return boundingBoxes;
 	}
-
+*/
 	// geef de afmeting van de Slide
-	public int getSize() {
+	public int getNumberOfSlideItems() {
 		return items.size();
 	}
-
+/*
 	public void draw(Graphics g, Rectangle area, ImageObserver view) {
 		float scale = getScale(area);
 	    int y = area.y;
 	    int panelY = y; //holds the y-position relative to the main panel
 		/* De titel hoeft niet meer apart behandeld te worden */
-	    SlideItem slideItem = this.title;
+/*	    SlideItem slideItem = this.title;
 	    Style style = Style.getStyle(slideItem.getLevel());
 	    slideItem.draw(area.x, y, scale, g, style, view);
 	    int titleHeight = slideItem.getBoundingBox(g, view, scale, style).height;
@@ -116,11 +107,11 @@ public class Slide {
 	}
 
 	private Rectangle drawBorders(Graphics g, int panelY, Rectangle rect) {
-		Graphics2D g2 = (Graphics2D) g;
+/*		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(STROKE_THICKNESS));
         g2.setColor(Color.LIGHT_GRAY);
         Rectangle borderRectangle = new Rectangle(rect.x - BORDER_OFFSET_LEFT, panelY - BORDER_OFFSET_TOP, rect.width + BORDER_OFFSET_RIGHT, rect.height + BORDER_OFFSET_BOTTOM);
         g2.draw(borderRectangle);
         return borderRectangle;
-    }
-}
+   return null;}
+*/}

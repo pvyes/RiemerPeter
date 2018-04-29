@@ -1,13 +1,12 @@
 package model;
+
 import java.util.ArrayList;
 
 import view.SlideViewerComponent;
-import view.SlideViewerFrame;
-
 
 /**
  * <p>Presentation houdt de slides in de presentatie bij.</p>
- * <p>Er is slechts één instantie van deze klasse aanwezig.</p>
+ * <p>Er is slechts Ã©Ã©n instantie van deze klasse aanwezig.</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.1 2002/12/17 Gert Florijn
  * @version 1.2 2003/11/19 Sylvia Stuurman
@@ -45,10 +44,6 @@ public class Presentation {
 		showTitle = nt;
 	}
 
-	public void setShowView(SlideViewerComponent slideViewerComponent) {
-		this.slideViewComponent = slideViewerComponent;
-	}
-
 	// geef het nummer van de huidige slide
 	public int getSlideNumber() {
 		return currentSlideNumber;
@@ -77,6 +72,7 @@ public class Presentation {
 	// Verwijder de presentatie, om klaar te zijn voor de volgende
 	public void clear() {
 		showList = new ArrayList<Slide>();
+		currentSlideNumber = 0;
 		setSlideNumber(-1);
 	}
 
@@ -98,7 +94,15 @@ public class Presentation {
 		return getSlide(currentSlideNumber);
 	}
 
-	public void update() {
+	public SlideViewerComponent getShowView() {
+		return slideViewComponent;
+	}
+
+	public void setShowView(SlideViewerComponent slideViewerComponent) {
+		this.slideViewComponent = slideViewerComponent;
+	}
+  
+  public void update() {
 		if (slideViewComponent != null) {
 			slideViewComponent.update(this, getCurrentSlide());
 		}

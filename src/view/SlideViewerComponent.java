@@ -4,12 +4,15 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import action.Action;
 import model.Presentation;
 import model.Slide;
-
 
 /** <p>SlideViewerComponent is een grafische component die Slides kan laten zien.</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -37,6 +40,11 @@ public class SlideViewerComponent extends JComponent {
 	private static final int FONTHEIGHT = 10;
 	private static final int XPOS = 1100; //x-position of slide number information
 	private static final int YPOS = 20;	//y-position of slide number information
+	private static final int SLIDEWIDTH = 1200;
+	private static final int SLIDEHEIGHT = 800;
+	
+//	private Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
+	private Map<Rectangle, Action> boundingBoxes = new HashMap<Rectangle, Action>();
 
 	public SlideViewerComponent(Presentation presentation, JFrame frame) {
 		setBackground(BGCOLOR); 
@@ -46,7 +54,13 @@ public class SlideViewerComponent extends JComponent {
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(Slide.WIDTH, Slide.HEIGHT);
+		return new Dimension(SLIDEWIDTH, SLIDEHEIGHT);
+	}
+	
+	// geef alle boundingBoxes in een Vector
+//	public Map<SlideItem, Rectangle> getBoundingBoxes() {
+	public Map<Rectangle, Action> getBoundingBoxes() {
+	return boundingBoxes;
 	}
 
 	public void update(Presentation presentation, Slide data) {
@@ -72,6 +86,12 @@ public class SlideViewerComponent extends JComponent {
 		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                  presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
-		slide.draw(g, area, this);
+		SlideDrawer sd = (SlideDrawer) DrawerFactory.createDrawer(slide, this);
+		sd.draw(area.x, area.y, getScale(area), g, this);
+	}
+	
+	// geef de schaal om de slide te kunnen tekenen
+	private float getScale(Rectangle area) {
+		return Math.min(((float)area.width) / ((float)SLIDEWIDTH), ((float)area.height) / ((float)SLIDEHEIGHT));
 	}
 }

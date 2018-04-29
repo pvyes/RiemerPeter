@@ -9,33 +9,35 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputAdapter;
 
-import model.Presentation;
-import model.Slide;
-import model.SlideItem;
+import action.Action;
+import view.SlideViewerComponent;
+import view.SlideViewerFrame;
 
 /**
  * @author peter
  *
  */
 public class MouseController extends MouseInputAdapter implements MouseListener {
-	Presentation presentation;
-	JFrame frame;
+	private SlideViewerFrame frame;
+	private SlideViewerComponent svc;
 	
-	public MouseController(JFrame f, Presentation p) {
-		frame = f;
-		presentation = p;
+	public MouseController(JFrame f) {
+		frame = (SlideViewerFrame) f;
+		svc = frame.getSlideViewerComponent();
 	}
 
 	public void mouseClicked(MouseEvent e) {
 		//get the position of the mouseclick
 		Point2D p = e.getPoint();
-		Slide slide = presentation.getCurrentSlide();
-		Map<SlideItem, Rectangle> bbs = slide.getBoundingBoxes();
-		for (Map.Entry<SlideItem, Rectangle> entry : bbs.entrySet()) {
-			Rectangle r = entry.getValue();
-			SlideItem si = entry.getKey();
-			if (r.getFrame().contains(p) && si.getAction() != null) {
-				si.getAction().performAction();
+//		Map<SlideItem, Rectangle> bbs = svc.getBoundingBoxes();
+		Map<Rectangle, Action> bbs = svc.getBoundingBoxes();
+//		for (Map.Entry<SlideItem, Rectangle> entry : bbs.entrySet()) {
+		for (Map.Entry<Rectangle, Action> entry : bbs.entrySet()) {
+			Rectangle r = entry.getKey();
+//			SlideItem si = entry.getKey();
+//			if (r.getFrame().contains(p) && si.getAction() != null) {
+			if (r.getFrame().contains(p)) {
+				entry.getValue().performAction();
 			}
 		}		
 	}

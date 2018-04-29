@@ -3,7 +3,8 @@ package action;
 import java.io.IOException;
 
 import accessor.Accessor;
-import controller.UserInteraction;
+import controller.InputInteraction;
+import controller.UIFactory;
 import main.JabberPoint;
 import main.JabberPointException;
 import model.Presentation;
@@ -33,39 +34,36 @@ public class SaveFile implements Action {
 
 	public void performAction() {
 		accessor = JabberPoint.getAccessor();
-		UserInteraction ui = new UserInteraction(UserInteraction.INPUT, TITLE, QUESTION, DEFAULT_VALUE);
-		String filename = ui.getAnswer();
+		String filename = getFileNameFromUser();
 		try {
 			accessor.saveFile(presentation, filename);
 		} catch (IOException e) {
 			new JabberPointException(e, IOE, IO_MESSAGE);
 		}
 	}
+	private String getFileNameFromUser() {
+		InputInteraction ii = (InputInteraction) UIFactory.createUserInteraction(UIFactory.INPUT);
+		ii.setView(presentation.getShowView());
+		ii.setTitle(TITLE);
+		ii.setMessage(QUESTION);
+		ii.setDefaultValue(DEFAULT_VALUE);
+		ii.show();
+		String filename = ii.getAnswer();
+		return filename;
+	}
 
-	/**
-	 * @return the filename
-	 */
 	public String getFilename() {
 		return filename;
 	}
 
-	/**
-	 * @param filename the filename to set
-	 */
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
 
-	/**
-	 * @return the presentation
-	 */
 	public Presentation getPresentation() {
 		return presentation;
 	}
 
-	/**
-	 * @param presentation the presentation to set
-	 */
 	public void setPresentation(Presentation presentation) {
 		this.presentation = presentation;
 	}

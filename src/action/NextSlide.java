@@ -40,7 +40,7 @@ public class NextSlide implements Action {
 		}		
 	}
 
-	public String getKey() {
+  public String getKey() {
 		return key;
 	}
 

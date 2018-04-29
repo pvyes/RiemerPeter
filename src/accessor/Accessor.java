@@ -1,7 +1,6 @@
 package accessor;
 import java.io.IOException;
 
-import main.JabberPointException;
 import model.Presentation;
 
 /**

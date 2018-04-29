@@ -23,9 +23,11 @@ public class SlideViewerFrame extends JFrame {
 	public final static int WIDTH = 1200;
 	public final static int HEIGHT = 800;
 	
+	private SlideViewerComponent slideViewerComponent;
+	
 	public SlideViewerFrame(String title, Presentation presentation) {
 		super(title);
-		SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, this);
+		slideViewerComponent = new SlideViewerComponent(presentation, this);
 		presentation.setShowView(slideViewerComponent);
 		setupWindow(slideViewerComponent, presentation, title);
 	}
@@ -44,7 +46,7 @@ public class SlideViewerFrame extends JFrame {
 		setVisible(true);
 	}
 	
-//	public SlideViewerComponent getSlideViewerComponent() {
-//		return slideViewerComponent;
-//	}
+	public SlideViewerComponent getSlideViewerComponent() {
+		return slideViewerComponent;
+	}
 }

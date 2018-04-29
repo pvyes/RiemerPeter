@@ -20,16 +20,10 @@ public class LastSlide implements Action {
 		presentation.setSlideNumber(presentation.getSize() - 1);		
 	}
 
-	/**
-	 * @return the presentation
-	 */
 	public Presentation getPresentation() {
 		return presentation;
 	}
-
-	/**
-	 * @param presentation the presentation to set
-	 */
+  
 	public void setPresentation(Presentation presentation) {
 		this.presentation = presentation;
 	}

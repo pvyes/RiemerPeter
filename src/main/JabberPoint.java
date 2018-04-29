@@ -26,8 +26,7 @@ import java.io.IOException;
  */
 
 public class JabberPoint {
-//	public static final String TESTFILE = "actiontest.xml";
-	public static final String TESTFILE = "errors.xml";
+	public static final String TESTFILE = "actiontest.xml";
 	public static final String SAVEFILE = "dump.xml";
 	public static final String ABOUT = "JabberPoint is a primitive slide-show program in Java(tm). It\n" +
 			"is freely copyable as long as you keep this notice and\n" +
@@ -75,7 +74,7 @@ public class JabberPoint {
 	
 	private static void addControllers(SlideViewerFrame mainframe, Presentation presentation) {
 		mainframe.addKeyListener(new KeyController(presentation));
-		mainframe.setMenuBar(new MenuController(mainframe, presentation));
-		mainframe.addMouseListener(new MouseController(mainframe, presentation));		
+		mainframe.setMenuBar(new MenuController(presentation));
+		mainframe.addMouseListener(new MouseController(mainframe));		
 	}
 }

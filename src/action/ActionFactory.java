@@ -29,7 +29,8 @@ public class ActionFactory {
 	private static Presentation presentation;
 	
     private static final ActionFactory instance = new ActionFactory();
-    private HashMap<String, Action> actionPool;
+    private static HashMap<String, Action> actionPool;
+
     
     //private constructor to avoid client applications to use constructor
     private ActionFactory(){
@@ -100,11 +101,11 @@ public class ActionFactory {
     	if (actionPool.containsKey(key)) {
     		return actionPool.get(key);
     	} else {
-    		return createAction(key, actions);
+    		return createAction(key);
     	}
     }
     
-    private Action createAction(String actionKey, List<Action> actions) {
+    private CompositeAction createCompositeAction(String actionKey, List<Action> actions) {
     	CompositeAction ca = new CompositeAction(actionKey);
     	for (int i = 0; i < actions.size(); i++) {
     		ca.addAction(actions.get(i));
@@ -112,4 +113,9 @@ public class ActionFactory {
     	actionPool.put(actionKey, ca);
     	return ca;    	
     }
+
+    public static void clearActionPool() {
+    	actionPool.clear();
+    }
+
 }

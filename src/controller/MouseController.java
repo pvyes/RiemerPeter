@@ -29,53 +29,36 @@ public class MouseController extends MouseInputAdapter implements MouseListener 
 	public void mouseClicked(MouseEvent e) {
 		//get the position of the mouseclick
 		Point2D p = e.getPoint();
-//		Map<SlideItem, Rectangle> bbs = svc.getBoundingBoxes();
 		Map<Rectangle, Action> bbs = svc.getBoundingBoxes();
-//		for (Map.Entry<SlideItem, Rectangle> entry : bbs.entrySet()) {
 		for (Map.Entry<Rectangle, Action> entry : bbs.entrySet()) {
 			Rectangle r = entry.getKey();
-//			SlideItem si = entry.getKey();
-//			if (r.getFrame().contains(p) && si.getAction() != null) {
 			if (r.getFrame().contains(p)) {
 				entry.getValue().performAction();
 			}
 		}		
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-	 */
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-	 */
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-	 */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-	 */
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
-
 }

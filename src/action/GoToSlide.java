@@ -38,7 +38,7 @@ public class GoToSlide implements Action {
 		int pageNumber = Integer.parseInt(ii.getAnswer());
 		return pageNumber;
 	}
-	
+
 	/**
 	 * @return the presentation
 	 */

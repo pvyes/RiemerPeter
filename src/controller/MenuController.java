@@ -16,6 +16,16 @@ import action.PreviousSlide;
 import action.SaveFile;
 import action.SystemExit;
 
+import action.About;
+import action.ActionFactory;
+import action.GoToSlide;
+import action.NewFile;
+import action.NextSlide;
+import action.OpenFile;
+import action.PreviousSlide;
+import action.SaveFile;
+import action.SystemExit;
+
 import main.JabberPoint;
 import model.Presentation;
 
@@ -76,6 +86,7 @@ public class MenuController extends MenuBar {
 		fileMenu.add(menuItem = mkMenuItem(SAVE));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO Input
 				SaveFile saveFile = (SaveFile) af.getAction(ActionFactory.SAVE_FILE);
 				saveFile.setFilename(JabberPoint.SAVEFILE);
 				saveFile.performAction();

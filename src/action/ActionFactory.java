@@ -30,6 +30,7 @@ public class ActionFactory {
 	
     private static final ActionFactory instance = new ActionFactory();
     private static HashMap<String, Action> actionPool;
+
     
     //private constructor to avoid client applications to use constructor
     private ActionFactory(){
@@ -100,7 +101,7 @@ public class ActionFactory {
     	if (actionPool.containsKey(key)) {
     		return actionPool.get(key);
     	} else {
-    		return createCompositeAction(key, actions);
+    		return createAction(key);
     	}
     }
     
@@ -112,8 +113,9 @@ public class ActionFactory {
     	actionPool.put(actionKey, ca);
     	return ca;    	
     }
-    
+
     public static void clearActionPool() {
     	actionPool.clear();
     }
+
 }

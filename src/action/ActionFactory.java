@@ -101,7 +101,7 @@ public class ActionFactory {
     	if (actionPool.containsKey(key)) {
     		return actionPool.get(key);
     	} else {
-    		return createAction(key);
+    		return createCompositeAction(key, actions);
     	}
     }
     

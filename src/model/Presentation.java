@@ -100,7 +100,9 @@ public class Presentation {
 
 	public void setShowView(SlideViewerComponent slideViewerComponent) {
 		this.slideViewComponent = slideViewerComponent;
-	}	public void update() {
+	}
+	
+	public void update() {
 		if (slideViewComponent != null) {
 			slideViewComponent.update(this, getCurrentSlide());
 		}

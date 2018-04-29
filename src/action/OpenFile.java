@@ -54,30 +54,19 @@ public class OpenFile implements Action {
 		return filename;
 	}
 
-	/**
-	 * @return the filename
-	 */
 	public String getFilename() {
 		return filename;
 	}
 
-	/**
-	 * @param filename the filename to set
-	 */
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
 
-	/**
-	 * @return the presentation
-	 */
+
 	public Presentation getPresentation() {
 		return presentation;
 	}
 
-	/**
-	 * @param presentation the presentation to set
-	 */
 	public void setPresentation(Presentation presentation) {
 		this.presentation = presentation;
 	}

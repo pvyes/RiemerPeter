@@ -52,3 +52,6 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+# Specific files
+dump.xml

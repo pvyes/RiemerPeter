@@ -16,16 +16,6 @@ import action.PreviousSlide;
 import action.SaveFile;
 import action.SystemExit;
 
-import action.About;
-import action.ActionFactory;
-import action.GoToSlide;
-import action.NewFile;
-import action.NextSlide;
-import action.OpenFile;
-import action.PreviousSlide;
-import action.SaveFile;
-import action.SystemExit;
-
 import main.JabberPoint;
 import model.Presentation;
 

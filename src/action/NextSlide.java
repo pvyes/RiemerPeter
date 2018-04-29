@@ -39,8 +39,8 @@ public class NextSlide implements Action {
 			presentation.setSlideNumber(currentSlideNumber + 1);
 		}		
 	}
-
-  public String getKey() {
+	
+	public String getKey() {
 		return key;
 	}
 

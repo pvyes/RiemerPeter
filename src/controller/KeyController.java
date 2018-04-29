@@ -5,7 +5,6 @@ import action.ActionFactory;
 import action.NextSlide;
 import action.PreviousSlide;
 import action.SystemExit;
-import main.JabberPoint;
 import model.Presentation;
 
 import java.awt.event.KeyAdapter;

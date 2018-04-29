@@ -100,11 +100,11 @@ public class ActionFactory {
     	if (actionPool.containsKey(key)) {
     		return actionPool.get(key);
     	} else {
-    		return createAction(key, actions);
+    		return createCompositeAction(key, actions);
     	}
     }
     
-    private Action createAction(String actionKey, List<Action> actions) {
+    private CompositeAction createCompositeAction(String actionKey, List<Action> actions) {
     	CompositeAction ca = new CompositeAction(actionKey);
     	for (int i = 0; i < actions.size(); i++) {
     		ca.addAction(actions.get(i));

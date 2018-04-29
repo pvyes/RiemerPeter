@@ -2,7 +2,6 @@ package action;
 
 import controller.MessageInteraction;
 import controller.UIFactory;
-import controller.UserInteraction;
 import main.JabberPoint;
 
 /**

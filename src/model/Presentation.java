@@ -1,7 +1,7 @@
 package model;
+
 import java.util.ArrayList;
 
-import action.ActionFactory;
 import view.SlideViewerComponent;
 
 /**

@@ -10,9 +10,9 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import action.Action;
 import model.Presentation;
 import model.Slide;
-import model.SlideItem;
 
 /** <p>SlideViewerComponent is een grafische component die Slides kan laten zien.</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -43,7 +43,8 @@ public class SlideViewerComponent extends JComponent {
 	private static final int SLIDEWIDTH = 1200;
 	private static final int SLIDEHEIGHT = 800;
 	
-	private Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
+//	private Map<SlideItem, Rectangle> boundingBoxes = new HashMap<SlideItem, Rectangle>();
+	private Map<Rectangle, Action> boundingBoxes = new HashMap<Rectangle, Action>();
 
 	public SlideViewerComponent(Presentation presentation, JFrame frame) {
 		setBackground(BGCOLOR); 
@@ -57,8 +58,9 @@ public class SlideViewerComponent extends JComponent {
 	}
 	
 	// geef alle boundingBoxes in een Vector
-	public Map<SlideItem, Rectangle> getBoundingBoxes() {
-		return boundingBoxes;
+//	public Map<SlideItem, Rectangle> getBoundingBoxes() {
+	public Map<Rectangle, Action> getBoundingBoxes() {
+	return boundingBoxes;
 	}
 
 	public void update(Presentation presentation, Slide data) {

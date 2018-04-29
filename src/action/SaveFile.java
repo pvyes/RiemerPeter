@@ -5,7 +5,6 @@ import java.io.IOException;
 import accessor.Accessor;
 import controller.InputInteraction;
 import controller.UIFactory;
-import controller.UserInteraction;
 import main.JabberPoint;
 import main.JabberPointException;
 import model.Presentation;

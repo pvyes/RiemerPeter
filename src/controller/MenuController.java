@@ -1,6 +1,5 @@
 package controller;
 import java.awt.MenuBar;
-import java.awt.Frame;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
@@ -39,6 +38,7 @@ public class MenuController extends MenuBar {
 	protected static final String FILE = "File";
 	protected static final String EXIT = "Exit";
 	protected static final String GOTO = "Go to";
+	protected static final String SHOWPRESENTATION = "Show presentation";
 	protected static final String HELP = "Help";
 	protected static final String NEW = "New";
 	protected static final String NEXT = "Next";

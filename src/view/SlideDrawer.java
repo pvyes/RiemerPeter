@@ -10,10 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
 
-import model.BitmapItem;
 import model.Slide;
 import model.SlideItem;
-import model.TextItem;
 
 /**
  * @author peter
@@ -71,7 +69,8 @@ public class SlideDrawer implements Drawer {
 	    	  //correct the y-positions to catch mouseclicks with the title height
 	    	  borders.setBounds(borders.x, borders.y + titleHeight, borders.width, borders.height);
 //		      slide.getBoundingBoxes().put(slideItem, borders);
-		      mainframe.getBoundingBoxes().put(slideItem, borders);
+//		      mainframe.getBoundingBoxes().put(slideItem, borders);
+		      mainframe.getBoundingBoxes().put(borders, slideItem.getAction());
 	      }
 	      y += height;
 	      panelY += height;

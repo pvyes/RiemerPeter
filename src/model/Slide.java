@@ -1,16 +1,6 @@
 package model;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Stroke;
-import java.awt.image.ImageObserver;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
 
-import view.Style;
+import java.util.Vector;
 
 /** <p>Een slide. Deze klasse heeft tekenfunctionaliteit.</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman

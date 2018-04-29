@@ -2,7 +2,6 @@ package action;
 
 import controller.InputInteraction;
 import controller.UIFactory;
-import controller.UserInteraction;
 import model.Presentation;
 
 /**
@@ -39,7 +38,7 @@ public class GoToSlide implements Action {
 		int pageNumber = Integer.parseInt(ii.getAnswer());
 		return pageNumber;
 	}
-
+	
 	/**
 	 * @return the presentation
 	 */

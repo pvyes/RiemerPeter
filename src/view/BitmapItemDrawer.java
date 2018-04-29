@@ -57,5 +57,4 @@ public class BitmapItemDrawer implements SlideItemDrawer {
 		}
 		return null;
 	}
-
 }

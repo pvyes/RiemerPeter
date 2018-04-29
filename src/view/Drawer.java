@@ -11,6 +11,6 @@ import java.awt.image.ImageObserver;
 public interface Drawer {
 	
 	// teken het item
-		public void draw(int x, int y, float scale, 
-				Graphics g, ImageObserver observer);
+	public void draw(int x, int y, float scale, 
+			Graphics g, ImageObserver observer);
 }
